@@ -1,0 +1,245 @@
+<?php
+
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Prints a particular instance of a problem in the sort module.
+ *
+ * You can have a rather longer description of the file as well,
+ * if you like, and it can span multiple lines.
+ *
+ * @package    mod
+ * @subpackage sort
+ * @copyright  2011 Your Name
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+
+require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
+require_once(dirname(__FILE__).'/lib.php');
+require_once(dirname(__FILE__).'/sort_comment_form.php');
+
+$swid = optional_param('id', 0, PARAM_INT); // studentwork ID
+$pid = optional_param('pid', 0, PARAM_INT); // pid
+$studentwork = $DB->get_record('sort_studentwork',array('id' => $swid));
+
+if ($studentwork) {
+  $this_studentwork = $studentwork;
+  $pid = $studentwork->pid;
+}
+else {
+  if (!$pid) {
+    print_error('That student sample or problem does not exist!');
+  }
+}
+$studentworks = $DB->get_records('sort_studentwork', array('pid' => $pid), 'name ASC');
+
+$swids = "";
+foreach ($studentworks as $studentwork) {
+  if ($swids == "") $swids = "($studentwork->id";
+  else $swids.=  ",$studentwork->id";
+}
+$swids.=")";
+
+
+if (optional_param('pid', 0, PARAM_INT)) {
+  $user_classification = $DB->get_record_select('sort_classification', "uid = $USER->id AND swid IN $swids ");
+  if (!$user_classification) {
+    redirect("problem.php?id=$pid","You need to sort some student work before you can examine these results");
+  }
+  $this_studentwork = $studentworks[$user_classification->swid];
+  $swid = $this_studentwork->id;
+}
+
+
+
+$problem = $DB->get_record('sort_problem',array('id'=>$this_studentwork->pid));
+$sort = $DB->get_record('sort', array('id' => $problem->sid));
+$course = $DB->get_record('course',array('id' => $sort->course));
+if ($course->id) {
+    $cm  = get_coursemodule_from_instance('sort', $sort->id, $course->id, false, MUST_EXIST);
+}
+else {
+    error('Could not find the problem sort activity or course!');
+}
+
+// require_login has to come before additional settings to the $PAGE variable, or somethings (like
+// pagelayout are lost -- CR
+require_login($course, true, $cm);
+$context = get_context_instance(CONTEXT_MODULE, $cm->id);
+
+/// Set the page info
+
+$PAGE->set_url('/mod/sort/studentwork.php', array('id' => $swid));
+$PAGE->set_title(format_string("Viewing $studentwork->name"));
+$PAGE->set_heading(format_string($course->fullname));
+$PAGE->set_context($context);
+
+$PAGE->add_body_class('sort-student-work-view');
+
+
+$PAGE->requires->js('/mod/sort/scripts/jquery.min.js');
+$PAGE->requires->js('/mod/sort/scripts/sort-comments.js');
+$PAGE->requires->css('/mod/sort/css/sort.css');
+
+sort_set_display_type($sort);
+
+add_to_log($course->id, 'sort', 'view', "studentwork.php?id=$swid", $this_studentwork->name, $cm->id);
+
+
+// Get categories from sort object.
+$categories = array(
+          '0' => 'None',
+          '1' => ucwords($sort->category_1),
+          '2' => ucwords($sort->category_2),
+          '3' => ucwords($sort->category_3),
+          '4' => ucwords($sort->category_4),
+ );
+
+$arguments = array(
+    'contextid' => $context->id,
+    'component' => 'mod_sort',
+    'filearea' => 'studentwork',
+  );
+
+$image = $DB->get_record_select('files', "filesize <> 0 AND component = 'mod_sort' AND contextid = '$context->id' AND filearea= 'studentwork' AND itemid = $swid");
+
+
+$this_classification = $DB->get_record('sort_classification', array('swid' => $swid, 'uid' => $USER->id));
+if (!$this_classification) {
+  print_error('You haven\'t sorted this piece of student work yet!');
+}
+
+$mform = new sort_comment_form("studentwork.php?id=$swid", array('classification' => $this_classification));
+
+
+$classifications = $DB->get_records_select('sort_classification',"uid = $USER->id AND swid IN $swids ", NULL, 'commenttime ASC');
+
+foreach($classifications as $classification) {
+  $classifications_indexed[$classification->swid] = $classification;
+}
+
+$score_totals = array(
+  '1'=> 0,
+  '2'=> 0,
+  '3'=> 0,
+  '4'=> 0,
+);
+$uids = array();
+$all_classifications = $DB->get_records('sort_classification', array('swid' => $swid));
+foreach($all_classifications as $classification) {
+  $score_totals[$classification->category] += 1;
+  $uids[] = $classification->uid;
+}
+
+$users = $DB->get_records_list('user','id',$uids);
+
+
+if ($results = $mform->get_data()) {
+  $this_classification->commenttext = $results->commenttext['text'];
+  $this_classification->commenttime = time();
+  $DB->update_record('sort_classification', $this_classification);
+  redirect("studentwork.php?id=$swid");
+}
+
+
+
+
+
+echo $OUTPUT->header();
+
+
+
+$sw_links = array();
+echo "<ul class='sort-student-work-pager'>";
+foreach ($studentworks as $studentwork) {
+  if (isset($classifications_indexed[$studentwork->id])) {
+    $classes = "sort-pager-link";
+    if ($studentwork->id == $swid) $classes.= " sort-pager-current";
+    $sw_links[$studentwork->name] = "<li class='$classes'><a href='studentwork.php?id=$studentwork->id'>$studentwork->name</a></li>";
+  }
+}
+
+ksort($sw_links);
+foreach ($sw_links as $link) {
+  echo $link;
+}
+echo "</ul>";
+
+echo "<div class='sort-student-work-wrapper'>";
+echo "<div class='sort-work-sample'>";
+echo $OUTPUT->heading("Sample " . $this_studentwork->name);
+echo "<img src='" . sort_get_image_file_url($image) . "' class='sort-work-sample-image' />";
+echo "</div>";
+
+echo "<div class='sort-classification-wrapper'>";
+
+echo "<div class='sort-user-classification-wrapper'><div class='sort-user-classification'>";
+echo "<h3>How did you score the work?</h3>";
+echo "<p><em>" . $categories[$this_classification->category] . "</em></p>";
+echo "</div></div>";
+echo "<div class='sort-others-classification-wrapper'><div class='sort-others-classification'>";
+echo "<h3>How did the class score the work?</h3>";
+echo "<table class='sort-others-table'>";
+foreach ($score_totals as $cat_index => $total) {
+  echo "<tr><td><em>" . $categories[$cat_index] . "</em></td><td>" . $total . "</td></tr>";
+}
+echo "</table>";
+echo "</div></div>";
+
+echo "</div>";
+
+echo '<div class="sort-studentwork-comments">';
+
+echo "<h3>Explanations</h3>";
+echo "<p>Explain your reasoning for sorting this piece of student work as you did.  You can also view other student's explanations.</p>";
+echo "<div id='sort-filter-container' >Filter: <select id='sort-comment-filter'>
+  <option value='0'>- All -</option>
+  <option value='1'>$categories[1]</option>
+  <option value='2'>$categories[2]</option>
+  <option value='3'>$categories[3]</option>
+  <option value='4'>$categories[4]</option>
+</select></div>
+";
+$first = true;
+foreach ($all_classifications as $classification) {
+  if (!is_null($classification->commenttext)) {
+    $class = "sort-comment-box sort-comment-category-$classification->category";
+    if ($first) {
+      $first = false;
+      $class .= ' sort-comment-first';
+    }
+    echo "<div class='$class'>";
+    echo "<div class='sort-comment-username'><strong>" . $users[$classification->uid]->username . "</strong> - <em>" . $categories[$classification->category] . "</em></div> ";
+    echo "<div class='sort-comment-body'>" . format_text($classification->commenttext) . "</div>";
+    echo "</div>";
+  }
+}
+
+echo '</div>';
+echo '<div class="sort-studentwork-comment-form">';
+echo "<h3>My Explanation</h3>";
+
+if (isset($this_classification->commenttime)) unset($this_classification->commenttime);
+
+echo $mform->display();
+echo "</div>";
+echo "</div>";
+echo "<div class='sort-action-links'>";
+echo '<div class="sort-back-problem-link-box"><a href="problem.php?id=' . $problem->id . '">Back to the Problem</a></div>';
+echo "</div>";
+// Finish the page
+echo $OUTPUT->footer();

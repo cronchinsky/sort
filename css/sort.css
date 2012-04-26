@@ -1,0 +1,360 @@
+
+/* Overall Interface */
+
+.sort-directions-box legend span.ui-icon{
+    display:inline-block;
+}
+
+.sort-directions-box legend span.sort-directions-text {
+    font-size:16px;
+    position:relative;
+    top:-1px;
+}
+
+.sort-directions-box legend {
+    margin-left:20px;
+}
+
+.sort-directions-box.sort-directions-visible {
+    border:1px solid #d3d3d3;
+    border-radius:15px;
+}
+
+.sort-drag-interface {
+    width:80%;
+    border:1px solid #d3d3d3;
+    border-radius:15px;
+    padding:10px;
+    margin: 10px auto;
+}
+
+.sort-drag-interface li {
+  list-style-type:none;
+}
+
+
+/* Top Gallery (id = sort-gallery) */
+
+#sort-gallery { 
+	 width: 100%;
+	 min-height: 12em;
+         position:relative;
+}
+  
+
+#sort-gallery .sort-studentwork {
+    position:absolute;
+    top:0;
+}
+
+.sort-next-button {
+    display:none;
+}
+
+#sort-gallery li a.ui-icon-magnifying,
+#sort-gallery .sort-next-button {
+    display:block;
+    position:absolute;
+    bottom:10px;
+    left:10px;
+    background-color:#eee;
+    border-radius:5px;
+}
+
+
+
+#sort-gallery .sort-next-button {
+    left:50px;
+}
+
+#sort-gallery li.sort-gallery-end-message {
+    line-height:200px;
+    font-size:30px;
+}
+	
+#sort-gallery .sort-studentwork {
+  width: 100%;
+  height:200px;
+  margin: 0 0.4em 0.4em 0;
+  text-align: center;
+  overflow:hidden;
+}
+
+.sort-gallery-end-message p {
+    text-align:center;
+}
+
+#sort-gallery .sort-actions-list {
+    position: absolute;
+    right: 0px;
+    top: 20px;
+    text-align: left;
+    background-color: #EEE;
+    padding:10px;
+    padding-left: 30px;
+    border-radius: 5px;
+    width: 150px;
+    margin-left:-10px;
+}
+
+.jsenabled #sort-gallery .sort-actions-list {
+    display:none;
+}
+
+.sort-drag-interface #sort-gallery .sort-actions-list li {
+    list-style-type: disc;    
+}
+
+
+/* All sort galleries (including categories) */
+.sort-gallery.custom-state-active {
+    background: #eee;
+}
+
+.sort-gallery li h5 {
+  margin: 0 0 0.4em;
+  cursor: move;
+}
+
+.sort-gallery .sort-studentwork > a {
+  float: right;
+}
+
+.sort-gallery li a.ui-icon-zoomin {
+  float: left;
+}
+
+.sort-gallery li img {
+  width: 100%;
+  cursor: move;
+}
+
+
+.sort-category {
+  
+  margin:20px .5%;
+  width: 23%;
+  height:18em;
+  border-width:1px;
+  display: inline-block;
+  vertical-align:bottom;
+  overflow-y:auto;
+} * html .sort-gallery { height: 18em; } /* IE6 */
+
+.sort-category h4 {
+  line-height:1.2em;
+  margin: 0 0 0.4em;
+  height: 2.4em;
+  text-align:center;
+  text-transform:capitalize;
+  padding:4px;
+  overflow:hidden;
+}
+
+
+
+.jsenabled .sort-category .sort-studentwork {
+    width:48px;
+    height:3em;
+    float:left;
+    margin-left:5px;
+}
+
+.sort-category h4 .ui-icon {
+  float: left;
+}
+
+.sort-category li > img {
+  display: none;
+}
+
+.jsenabled .sort-category .sort-actions-list {
+    display:none;
+}
+
+#category-container {
+    text-align:center;
+}
+
+
+.sort-drag-interface fieldset.felement.fgroup {
+    width:100%;
+}
+
+
+/* Styles for other parts of the module */
+
+
+.sort-student-work-pager {
+    margin:0;
+    padding:0;
+    text-align:center;
+}
+
+.sort-student-work-pager li {
+    display:inline;
+    list-style-type:none;
+    
+}
+
+.sort-student-work-pager li:first-child:before {
+    content:"";
+}
+.sort-student-work-pager li:before {
+    content:" | ";
+}
+
+.sort-pager-current a:link,
+.sort-pager-current a:hover,
+.sort-pager-current a:visited,
+.sort-pager-current a:active{
+    color:navy;
+    font-weight:bold;
+}
+
+.sort-manage-form-wrapper {
+    margin-top:25px;
+    border:1px solid #d3d3d3;
+    border-radius:15px;
+}
+
+.sort-delete-link {
+    margin-left:10px;
+}
+/* Student work View page */
+.sort-student-work-wrapper{
+    margin-top:25px;
+    padding:30px;
+    border: 1px solid #d3d3d3;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.sort-user-classification-wrapper,
+.sort-others-classification-wrapper {
+    display:inline-block;
+    width:50%;
+    margin:0;
+    padding:0;
+    vertical-align:top;
+}
+
+.sort-others-classification-wrapper {
+    border-left:1px solid #d3d3d3;
+    margin-left:-1px;    
+}
+
+ .sort-classification-wrapper h3 {
+    border-bottom:1px dashed #d3d3d3;
+    display:inline-block;
+}
+
+.sort-others-table {
+    text-align:right;
+    margin:5px auto;
+}
+
+.sort-classification-wrapper {
+    border:1px solid #d3d3d3;
+    border-top-left-radius: 15px;
+    border-top-right-radius:15px;
+    margin-top:20px;
+}
+
+.sort-user-classification,
+.sort-others-classification {
+    padding:20px;
+}
+.sort-user-classification-wrapper p,
+.sort-others-classification-wrapper p {
+    text-transform: capitalize;
+}
+
+.sort-studentwork-comments {
+    border-left:1px solid #d3d3d3;
+    border-right:1px solid #d3d3d3;
+    padding:10px;
+}
+
+#sort-filter-container {
+    text-align:left;
+    padding-bottom:5px;
+    border-bottom:1px dashed #d3d3d3;
+    margin-bottom:10px;
+}
+
+.sort-studentwork-comment-form {
+    padding-top:15px;
+    border:1px solid #d3d3d3;
+    border-bottom-right-radius:15px;
+    border-bottom-left-radius:15px;
+}
+
+.sort-comment-box {
+    padding:5px 20px;
+    background-color:white;
+    border:2px solid #d3d3d3;
+    text-align:left;
+    margin-top:-2px;
+}
+
+
+.sort-comment-username {
+    margin-bottom:5px;
+    display:inline-block;
+    border-bottom:1px dashed #d3d3d3;
+}
+
+.sort-action-links {
+    text-align:center;
+    margin-top:10px;
+}
+
+.sort-my-scores-table {
+    margin:10px auto;
+    border-collapse: collapse;
+    border:1px solid #d3d3d3;
+}
+
+.sort-my-scores-table td{
+    border:1px solid #d3d3d3;
+}
+.sort-my-scores-table th {
+    background-color: #d3d3d3;
+}
+
+
+.sort-problem-list-wrapper {
+    text-align:center;
+}
+.sort-problem-list {
+    display:inline-block;
+}
+
+
+.sort-my-scores-table .sort-right-border {
+    border-right:2px solid black;
+}
+
+.sort-my-scores-table .sort-left-border {
+    border-left: 2px solid black;
+}
+
+
+.ui-widget-content .ui-icon.ui-icon-magnifying {
+    background-image: url(images/magnify.png);
+    width:32px;
+    height:32px;
+}
+
+.ui-widget-content .ui-icon.ui-icon-next-arrow {
+    background-image: url(images/next-arrow.png);
+    width:32px;
+    height:32px;
+}
+
+.sort-category .ui-widget-content .ui-icon.ui-icon-magnifying {
+    background-image: url(images/magnify-small.png);
+    width:32px;
+    height:32px;
+}
