@@ -17,7 +17,7 @@ class sort_new_studentwork_form extends moodleform {
         $options = array_combine($letters,$letters);
         
         foreach ($studentworks as $studentwork) {
-          if (isset($options[$studentwork->name]) && $this_studentwork->name != $studentwork->name) {
+          if (isset($options[$studentwork->name]) && isset($this_studentwork) && $this_studentwork->name != $studentwork->name) {
               unset($options[$studentwork->name]);
           }
         }

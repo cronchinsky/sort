@@ -73,6 +73,8 @@ sort_set_display_type($sort);
 // All student work for the problem.
 $studentworks = $DB->get_records('sort_studentwork', array('pid' => $problem->id));
 
+$stuwork = NULL;
+
 // If there's a swid in the url, we're editing an exisitng student work
 if ($swid != 0) {
   // Get a piece of existing student work to load in the draft area
@@ -96,16 +98,17 @@ if ($mform->is_cancelled()) {
 else {
 
   
+  if ($stuwork) {
   //Set up the draft area.
   $draftitemid = file_get_submitted_draft_itemid('attachments');
-  file_prepare_draft_area($draftitemid, $context->id, 'mod_sort', 'studentwork', $stuwork->id, array('subdirs' => 0, 'maxbytes' => $maxbytes, 'maxfiles' => 50));
+  file_prepare_draft_area($draftitemid, $context->id, 'mod_sort', 'studentwork', $stuwork->id, array('subdirs' => 0, 'maxfiles' => 1));
 
   // This also helps with the form, since attachments is the form element name.
   $stuwork->attachments = $draftitemid;
 
   // Put the existing data into the form.
   $mform->set_data($stuwork);
-  
+  }
   // If there's data in the form...
   if ($results = $mform->get_data()) {
     
@@ -124,7 +127,7 @@ else {
       file_save_draft_area_files($results->attachments, $context->id, 'mod_sort', 'studentwork', $stuwork->id);
     }
     // Now redirect back to the problem page with the new / updated data.
-    redirect("problem.php?id=$pid");
+    redirect("editstuwork.php?pid=$pid");
   }
 }
 
@@ -132,25 +135,32 @@ else {
 echo $OUTPUT->header();
 echo $OUTPUT->heading("Manage Student Work for {$problem->name}");
 
-
-echo "<p>Select a piece of student work to edit, or click \"Add New\" to create a new piece of student work to sort.</p>";
+echo "<div class='sort-student-work-wrapper'>";
+echo "<h3>Select a piece of student work to edit, or click \"Add New\" to create a new piece of student work to sort.</h3>";
 echo "<ul class='sort-student-work-pager'>";
 foreach ($studentworks as $studentwork) {
   $class = ($swid == $studentwork->id) ? "class=\"sort-pager-current\"" : ""; 
   echo '<li ' . $class . '><a href="' . $CFG->wwwroot . '/mod/sort/editstuwork.php?pid=' . $studentwork->pid . '&amp;swid=' . $studentwork->id . '">' . $studentwork->name . '</a></li>';
 }
 $class = (!$swid) ? ' class="sort-pager-current" ' : "";
-echo '<li' . $class . '><a href="' . $CFG->wwwroot . '/mod/sort/editstuwork.php?pid=' . $studentwork->pid . '">Add New</a></li>';
+echo '<li' . $class . '><a href="' . $CFG->wwwroot . '/mod/sort/editstuwork.php?pid=' . $problem->id . '">Add New</a></li>';
 echo "</ul>";
 
 echo "<div class='sort-manage-form-wrapper'>";
+if ($swid) echo "<p class='sort-delete-link'><a href='deletestuwork.php?swid=$swid'>Delete this sample</a></p>";
 if ($swid) echo $OUTPUT->heading("Editing $stuwork->name");
 else echo $OUTPUT->heading("Adding New Student Work");
 
 //displays the form
 $mform->display();
-if ($swid) echo "<p class='sort-delete-link'><a href='deletestuwork.php?swid=$swid'>Delete This Student Work Sample</a></p>";
+
+
 echo "</div>";
+echo "<div class='sort-action-links'>";
+echo '<span class="sort-back-problem-link-box"><a href="problem.php?id=' . $pid . '">Back to the problem</a></span>';
+echo "</div>";
+echo "</div>";
+
 // Finish the page
 echo $OUTPUT->footer();
 

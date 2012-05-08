@@ -63,7 +63,7 @@ if ($confirm && $swid) {
 }
 
 // Set the page header.
-$PAGE->set_url('/mod/sort/editstuwork.php', array('pid' => $pid, 'swid' => $swid));
+$PAGE->set_url('/mod/sort/deletestuwork.php', array('swid' => $swid));
 $PAGE->set_title(format_string("Editing student work."));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);

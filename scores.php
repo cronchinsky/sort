@@ -135,7 +135,7 @@ $table .="</tr>";
 $table .= "</table>";
 echo $table;
 echo "<div class='sort-action-links'>";
-echo "<a href='problem.php?id=$pid'>Back to the Problem</a>";
+echo "<span><a href='problem.php?id=$pid'>Back to the Problem</a></span>";
 echo "</div>";
 
 // Finish the page

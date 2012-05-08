@@ -56,7 +56,8 @@ $swids.=")";
 
 
 if (optional_param('pid', 0, PARAM_INT)) {
-  $user_classification = $DB->get_record_select('sort_classification', "uid = $USER->id AND swid IN $swids ");
+
+  $user_classification = $DB->get_record_select('sort_classification', "uid = $USER->id AND swid IN $swids ",array(),'*',IGNORE_MULTIPLE);
   if (!$user_classification) {
     redirect("problem.php?id=$pid","You need to sort some student work before you can examine these results");
   }
@@ -84,16 +85,17 @@ $context = get_context_instance(CONTEXT_MODULE, $cm->id);
 /// Set the page info
 
 $PAGE->set_url('/mod/sort/studentwork.php', array('id' => $swid));
-$PAGE->set_title(format_string("Viewing $studentwork->name"));
+$PAGE->set_title(format_string("Viewing $this_studentwork->name"));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
 $PAGE->add_body_class('sort-student-work-view');
 
-
+$PAGE->requires->css('/mod/sort/css/jquery-ui.css');
 $PAGE->requires->js('/mod/sort/scripts/jquery.min.js');
 $PAGE->requires->js('/mod/sort/scripts/sort-comments.js');
 $PAGE->requires->css('/mod/sort/css/sort.css');
+$PAGE->requires->js('/mod/sort/scripts/jquery-ui.min.js');
 
 sort_set_display_type($sort);
 
@@ -164,12 +166,13 @@ echo $OUTPUT->header();
 
 
 $sw_links = array();
-echo "<ul class='sort-student-work-pager'>";
+echo "<div class='sort-student-work-pager'>";
+echo "<h4>Select a work sample to view</h4>";
+echo "<ul>";
 foreach ($studentworks as $studentwork) {
   if (isset($classifications_indexed[$studentwork->id])) {
-    $classes = "sort-pager-link";
-    if ($studentwork->id == $swid) $classes.= " sort-pager-current";
-    $sw_links[$studentwork->name] = "<li class='$classes'><a href='studentwork.php?id=$studentwork->id'>$studentwork->name</a></li>";
+    $classes = ($studentwork->id == $swid) ? " class='sort-pager-current' " : "";
+    $sw_links[$studentwork->name] = "<li$classes><a href='studentwork.php?id=$studentwork->id'>$studentwork->name</a></li>";
   }
 }
 
@@ -178,21 +181,21 @@ foreach ($sw_links as $link) {
   echo $link;
 }
 echo "</ul>";
-
+echo "</div>";
 echo "<div class='sort-student-work-wrapper'>";
-echo "<div class='sort-work-sample'>";
 echo $OUTPUT->heading("Sample " . $this_studentwork->name);
+echo "<div class='sort-work-sample'>";
 echo "<img src='" . sort_get_image_file_url($image) . "' class='sort-work-sample-image' />";
 echo "</div>";
 
 echo "<div class='sort-classification-wrapper'>";
 
 echo "<div class='sort-user-classification-wrapper'><div class='sort-user-classification'>";
-echo "<h3>How did you score the work?</h3>";
+echo "<h3>How did I sort the work?</h3>";
 echo "<p><em>" . $categories[$this_classification->category] . "</em></p>";
 echo "</div></div>";
 echo "<div class='sort-others-classification-wrapper'><div class='sort-others-classification'>";
-echo "<h3>How did the class score the work?</h3>";
+echo "<h3>How did the class sort the work?</h3>";
 echo "<table class='sort-others-table'>";
 foreach ($score_totals as $cat_index => $total) {
   echo "<tr><td><em>" . $categories[$cat_index] . "</em></td><td>" . $total . "</td></tr>";
@@ -201,11 +204,19 @@ echo "</table>";
 echo "</div></div>";
 
 echo "</div>";
+echo '<div class="sort-studentwork-comment-form">';
+echo "<h3 class='sort-studentwork-comment-form-header'><span class='ui-icon ui-icon-triangle-1-e sort-explanation-triangle'></span><span class='sort-explanation-header'>My Explanation - Give reasons for your classification</span></h3>";
+echo "<div class='sort-studentwork-comment-form-body'>";
+if (isset($this_classification->commenttime)) unset($this_classification->commenttime);
 
+echo $mform->display();
+
+echo "</div>";
+echo "</div>";
 echo '<div class="sort-studentwork-comments">';
 
 echo "<h3>Explanations</h3>";
-echo "<p>Explain your reasoning for sorting this piece of student work as you did.  You can also view other student's explanations.</p>";
+echo "<p>View other participant's explanations.</p>";
 echo "<div id='sort-filter-container' >Filter: <select id='sort-comment-filter'>
   <option value='0'>- All -</option>
   <option value='1'>$categories[1]</option>
@@ -230,16 +241,10 @@ foreach ($all_classifications as $classification) {
 }
 
 echo '</div>';
-echo '<div class="sort-studentwork-comment-form">';
-echo "<h3>My Explanation</h3>";
-
-if (isset($this_classification->commenttime)) unset($this_classification->commenttime);
-
-echo $mform->display();
-echo "</div>";
-echo "</div>";
 echo "<div class='sort-action-links'>";
-echo '<div class="sort-back-problem-link-box"><a href="problem.php?id=' . $problem->id . '">Back to the Problem</a></div>';
+echo '<span class="sort-back-problem-link-box"><a href="problem.php?id=' . $problem->id . '">Back to the problem</a></span>';
 echo "</div>";
+echo "</div>";
+
 // Finish the page
 echo $OUTPUT->footer();

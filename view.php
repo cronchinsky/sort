@@ -70,18 +70,21 @@ sort_set_display_type($sort);
 // Output starts here
 echo $OUTPUT->header();
 
-if ($sort->intro) { // Conditions to show the intro can change to look for own settings or whatever
-    echo $OUTPUT->box(format_module_intro('sort', $sort, $cm->id), 'generalbox mod_introbox', 'sortintro');
-}
+
 
 $sid = $sort->id;
 
 $problems = $DB->get_records('sort_problem', array('sid' => $sid));
 
 if ($problems) {
-  echo $OUTPUT->heading('Problems in this Sorting Activity');
-  echo "<div class='sort-problem-list-wrapper'>";
-  echo "<ul class='sort-problem-list'>";
+  echo $OUTPUT->heading($sort->name);
+  echo "<div class='sort-problem-wrapper'>";
+  if ($sort->intro) { // Conditions to show the intro can change to look for own settings or whatever
+    echo $OUTPUT->box(format_module_intro('sort', $sort, $cm->id), 'generalbox mod_introbox', 'sortintro');
+  }
+  echo "<div class='sort-problem-list'>";
+  echo "<h4>Select a problem to sort:</h4>";
+  echo "<ul>";
   foreach ($problems as $problem) {
     echo '<li><a href="' . $CFG->wwwroot . '/mod/sort/problem.php?id=' . $problem->id . '">' . $problem->name . '</a>';
     if (has_capability('mod/sort:edit', $context)) {
@@ -92,13 +95,15 @@ if ($problems) {
   }
   echo "</ul>";
   echo "</div>";
+ 
+  echo "</div>";
 }
 else {
   echo $OUTPUT->heading('There are no problems in this sorting activity.');
 }
+
 echo "<div class='sort-action-links'>";
-echo "<div class='sort-see-all-scores-link-box'><a href='allscores.php?sid=$sort->id'>See All of My Scores</a></div>";
-if (has_capability('mod/sort:edit', $context)) echo "<div class='sort-add-problem-link-box'><a href='" . $CFG->wwwroot . '/mod/sort/newproblem.php?sid=' . $sid . "'>Add a new problem</a></div>";
+	if (has_capability('mod/sort:edit', $context)) echo "<span class='sort-add-problem-link-box'><a href='" . $CFG->wwwroot . '/mod/sort/newproblem.php?sid=' . $sid . "'>Add a new problem</a></span>";
 echo "</div>";
 // Finish the page
 echo $OUTPUT->footer();

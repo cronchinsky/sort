@@ -24,4 +24,11 @@ $(function() {
             }
         }
     });
+    
+    
+    $('.sort-studentwork-comment-form-header').next().hide();
+    $('.sort-studentwork-comment-form h3').click(function () {
+       $(this).next().toggle(300).toggleClass('sort-comment-form-open');
+       $(this).find('.ui-icon').toggleClass('ui-icon-triangle-1-e').toggleClass('ui-icon-triangle-1-s');
+    });
 });

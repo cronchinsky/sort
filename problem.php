@@ -92,9 +92,11 @@ if ($nojs_category && $nojs_swid) {
 //Get all pieces of student work associated with this problem.
 $studentworks = $DB->get_records('sort_studentwork', array('pid' => $problem->id));
 
+if ($studentworks) {
 // Get an array of swids for the student work here.
 $swids = array_keys($studentworks);
 $swids = array_combine($swids,$swids);
+
 
 // If there is student work associated with this problem, load any classifications
 // from this user for any of these swids.  Yay implode!
@@ -107,7 +109,7 @@ foreach ($classifications as $classification) {
   $studentworks[$classification->swid]->category = $classification->category;
   $classifications_indexed[$classification->swid] = $classification;
 }
-
+}
 /// Print the page header
 
   $PAGE->set_url('/mod/sort/problem.php', array('id' => $problem->id));
@@ -127,8 +129,7 @@ foreach ($classifications as $classification) {
 
   sort_set_display_type($sort);
 
-// Output starts here
-  echo $OUTPUT->header();
+
 
 
 // If we do have student work that is unsorted, include the classify form
@@ -174,7 +175,8 @@ if ($studentworks) {
   }
 
 
-
+  // Output starts here
+  echo $OUTPUT->header();
 
 
 
@@ -197,8 +199,9 @@ if ($studentworks) {
     // Directions box 
     echo "<fieldset class='sort-directions-box'>";
     echo "<legend><span class='ui-icon ui-icon-triangle-1-e'></span><span class='sort-directions-text'>Directions</span></legend>";
-    echo "<div class='sort-directions-content'><p>Sort the student work into the different categories below.  You can click on the image of student work and drag it to one of the different categories.  After you have finished sorting, be sure to click 'Save changes' to permenantly save your work.</p></div>";
+    echo "<div class='sort-directions-content'><p>Sort the student work into the different categories below.  You can click on the image of student work and drag it to one of the different categories.  </p><p class='ui-icon-magnifying'>Click the magnifying glass to enlarge the image.</p><p class='ui-icon-next-arrow'>Click the arrow to move to the next image to sort.</p><h4>After you have finished sorting, be sure to click 'Save changes' to permanently save your work.</h4></div>";
     echo "</fieldset>";
+    
     // Create a box for the drag and drop interface.
     echo '<div class="sort-drag-interface ui-widget ui-helper-clearfix">';
 
@@ -213,7 +216,7 @@ if ($studentworks) {
     // In propper form for jquery ui for each student work.
     echo '<ul id="sort-gallery" class="sort-gallery ui-helper-reset ui-helper-clearfix">';
     echo "<li class='sort-gallery-end-message'><p>No More Student Work to Classify</p></li>";
-    
+    $gallery ="";
     $last_items = array();
     $put_last_swids = explode(',',$put_last);
     
@@ -265,27 +268,30 @@ if ($studentworks) {
     }
     // Display the hidden form and its submit buttons.
     $mform->display();
-    echo '</div></div>';
+    echo '</div>';
   
   
 
 }
 else {
-  
+  // Output starts here
+  echo $OUTPUT->header();
   // If there's no student work tied to this problem, the teachers should add some.
-  echo "No Student Work!  Add some!";
+  echo "<div>No Student Work!  Add some!";
 }
 
 
 // Begin action links at the bottom.
 echo "<div class='sort-action-links'>";
-echo '<div class="sort-participant-results-box"><a href="studentwork.php?pid=' . $problem->id . '">Participant Responses</a></div>';
-echo '<div class="sort-view-scores-link-box"><a href="scores.php?pid=' . $problem->id . '">My Class Chart</a></div>';
-echo '<div class="sort-back-link-box"><a href="view.php?s=' . $sort->id . '">Back to All Problems</a></div>';
+echo '<span class="sort-participant-results-box"><a href="studentwork.php?pid=' . $problem->id . '">Participant responses</a></span>';
+echo "<span class='sort-see-all-scores-link-box'><a href='allscores.php?sid=$sort->id&amp;pid=$problem->id'>My class chart</a></span>";
+//echo '<span class="sort-view-scores-link-box"><a href="scores.php?pid=' . $problem->id . '">My class chart</a></span>';
+echo '<span class="sort-back-link-box"><a href="view.php?s=' . $sort->id . '">Sort index</a></span>';
 
 if (has_capability('mod/sort:edit', $context)) {
-echo '<div class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage Student Work for this Problem</a></div>';
+echo '<span class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage student work</a></span>';
 }
 echo "</div>";
+echo '</div>';
 // Finish the page
 echo $OUTPUT->footer();

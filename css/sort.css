@@ -9,6 +9,7 @@
     font-size:16px;
     position:relative;
     top:-1px;
+    cursor:pointer;
 }
 
 .sort-directions-box legend {
@@ -32,7 +33,10 @@
   list-style-type:none;
 }
 
-
+.sort-drag-interface .fitem .felement {
+	margin-left: 0;
+	width: 100%;
+}
 /* Top Gallery (id = sort-gallery) */
 
 #sort-gallery { 
@@ -56,15 +60,15 @@
     display:block;
     position:absolute;
     bottom:10px;
-    left:10px;
+    right:10px;
     background-color:#eee;
     border-radius:5px;
 }
 
 
 
-#sort-gallery .sort-next-button {
-    left:50px;
+#sort-gallery li a.ui-icon-magnifying {
+    right:50px;
 }
 
 #sort-gallery li.sort-gallery-end-message {
@@ -149,6 +153,7 @@
   text-transform:capitalize;
   padding:4px;
   overflow:hidden;
+  font-size: .9em;
 }
 
 
@@ -183,7 +188,10 @@
 
 
 /* Styles for other parts of the module */
-
+#sortintro {
+	border: none;
+	padding: 0;
+}
 
 .sort-student-work-pager {
     margin:0;
@@ -191,17 +199,22 @@
     text-align:center;
 }
 
-.sort-student-work-pager li {
+.sort-student-work-pager  ul li {
     display:inline;
-    list-style-type:none;
     
 }
 
-.sort-student-work-pager li:first-child:before {
-    content:"";
-}
-.sort-student-work-pager li:before {
+.sort-student-work-pager ul li:before {
     content:" | ";
+}
+
+
+.sort-student-work-pager ul li:first-child:before {
+    content: "";
+}
+
+li.sort-pager-link-1:before {
+	content:"";
 }
 
 .sort-pager-current a:link,
@@ -213,21 +226,29 @@
 }
 
 .sort-manage-form-wrapper {
-    margin-top:25px;
-    border:1px solid #d3d3d3;
-    border-radius:15px;
+    background-color: #FAFAFA;
+    border: 1px solid #DDDDDD;
+    padding: 20px;
+    margin-top: 10px;
 }
 
 .sort-delete-link {
-    margin-left:10px;
+    float: right;
 }
 /* Student work View page */
 .sort-student-work-wrapper{
-    margin-top:25px;
-    padding:30px;
+    margin-top:5px;
+    padding:5px 30px;
     border: 1px solid #d3d3d3;
     border-radius: 15px;
-    text-align: center;
+    text-align: left;
+}
+
+.sort-work-sample {
+	height: 200px;
+	overflow: auto;
+	width: 100%;
+	text-align: center;
 }
 
 .sort-user-classification-wrapper,
@@ -250,8 +271,7 @@
 }
 
 .sort-others-table {
-    text-align:right;
-    margin:5px auto;
+     margin:5px;
 }
 
 .sort-classification-wrapper {
@@ -273,7 +293,10 @@
 .sort-studentwork-comments {
     border-left:1px solid #d3d3d3;
     border-right:1px solid #d3d3d3;
-    padding:10px;
+    border-bottom:1px solid #d3d3d3;
+    padding:10px 25px;
+     border-bottom-right-radius:15px;
+    border-bottom-left-radius:15px;
 }
 
 #sort-filter-container {
@@ -284,18 +307,18 @@
 }
 
 .sort-studentwork-comment-form {
-    padding-top:15px;
+    padding:15px 0 0 15px;
     border:1px solid #d3d3d3;
-    border-bottom-right-radius:15px;
-    border-bottom-left-radius:15px;
+    border-top:0px;
 }
 
 .sort-comment-box {
     padding:5px 20px;
-    background-color:white;
+    background-color: #FAF9ED;
     border:2px solid #d3d3d3;
     text-align:left;
     margin-top:-2px;
+    
 }
 
 
@@ -305,33 +328,71 @@
     border-bottom:1px dashed #d3d3d3;
 }
 
-.sort-action-links {
-    text-align:center;
-    margin-top:10px;
-}
+
 
 .sort-my-scores-table {
     margin:10px auto;
     border-collapse: collapse;
-    border:1px solid #d3d3d3;
+    border:1px solid #ADACAC;
 }
 
 .sort-my-scores-table td{
-    border:1px solid #d3d3d3;
+    border:1px solid #ADACAC;
+    vertical-align: top;
+    text-align: center;
 }
 .sort-my-scores-table th {
-    background-color: #d3d3d3;
+    background-color: #E0E0E0;
+    vertical-align: top;
+    border:1px solid #ADACAC;
+
 }
 
 
-.sort-problem-list-wrapper {
-    text-align:center;
+
+.sort-problem-wrapper  {	
+	width: 80%;
+	margin: 0 auto;
+	text-align: left;
+	padding: 25px 25px 5px 25px;
+	border: 1px solid #d3d3d3;
+	border-radius: 10px;
 }
+
+.sort-problem-wrapper .fgroup {
+	text-align: center;
+	
+}
+
 .sort-problem-list {
-    display:inline-block;
+    margin-left: 20px;
 }
 
+.sort-problem-list ul {
+    display:inline-block;
+    margin-top: 0;
+}
 
+.sort-action-links {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.sort-action-links span {
+    padding: 3px 10px;
+    margin: 0 5px;
+    border: 1px solid #eeeeee;
+    background-color: #FAF4D9;
+    border-radius: 10px;
+}
+
+.sort-action-links span:hover {
+	background-color: #eeeeee;
+}
+
+.sort-my-scores-table .category {
+	background-color: #eeeeee;
+}
 .sort-my-scores-table .sort-right-border {
     border-right:2px solid black;
 }
@@ -357,4 +418,35 @@
     background-image: url(images/magnify-small.png);
     width:32px;
     height:32px;
+}
+
+.sort-directions-box .ui-icon-magnifying {
+    background: url(images/magnify.png) left no-repeat;
+    padding-left: 40px;
+    line-height: 3em;
+    margin-left: 30px;
+}
+
+.sort-directions-box .ui-icon-next-arrow {
+    background: url(images/next-arrow.png) left no-repeat;
+    padding-left: 40px;
+    line-height: 3em;
+    margin-left: 30px;
+}
+
+.sort-explanation-triangle {
+    display:inline-block;
+}
+
+.sort-comment-form-open {
+    border:1px solid #d3d3d3;
+}
+
+.sort-studentwork-comment-form-body {
+    margin-bottom:20px;
+    margin-right:20px;
+}
+
+.sort-studentwork-comment-form-header {
+    cursor:pointer;
 }

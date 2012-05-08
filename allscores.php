@@ -33,6 +33,7 @@ require_once(dirname(__FILE__).'/lib.php');
 
 // Get the sort id from the url.
 $sid = optional_param('sid', 0, PARAM_INT); // sort ID
+$pid = optional_param('pid', 0, PARAM_INT); // problem ID
 
 // Load any problems within this activity
 $problems = $DB->get_records('sort_problem',array('sid' => $sid));
@@ -55,13 +56,11 @@ else {
 // Pre-made moodley goodness
 require_login($course, true, $cm);
 $context = get_context_instance(CONTEXT_MODULE, $cm->id);
-add_to_log($course->id, 'sort', 'view', "allscores.php?sid=$sort->id", $USER->name, $cm->id);
-
-
+add_to_log($course->id, 'sort', 'view', "allscores.php?sid=$sort->id", $USER->username, $cm->id);
 
 /// Print the page header
 $PAGE->set_url('/mod/sort/allscores.php', array('sid' => $sort->id));
-$PAGE->set_title(format_string($problem->name));
+$PAGE->set_title("My Scores for " . $sort->name);
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->add_body_class('sort-user-scores-grid-view');
@@ -71,7 +70,7 @@ sort_set_display_type($sort);
 // Output starts here
 echo $OUTPUT->header();
 
-echo $OUTPUT->heading("Your Scores for $sort->name");
+echo $OUTPUT->heading("My class chart for $sort->name");
 
 // Get categories from sort object.
 $categories = array(
@@ -88,7 +87,8 @@ foreach ($problems as $problem) {
   $pids[] = $problem->id;
 }
 
-//Get all student work associated with this problem.
+
+// Get all student work associated with this problem.
 $studentworks = $DB->get_records_list('sort_studentwork', 'pid', $pids, 'name');
 
 // Construct the SQL to look for all classifications by the current user for
@@ -99,6 +99,7 @@ foreach($studentworks as $studentwork) {
   else $where .= "OR swid = $studentwork->id ";
 }
 if ($where == "") print_error('No student work found for this problem!');
+$where = "(" . $where . ")";
 $where .= " AND uid = $USER->id";
 $classifications = $DB->get_records_select('sort_classification',$where);
 
@@ -120,25 +121,25 @@ $sw_names = array_unique($sw_names);
 $table = "
 <table class='sort-my-scores-table'>
   <tr>
-    <th rowspan='2' class='sort-right-border'>Student Work</th>";
+    <th rowspan='1' class='sort-right-border'></th>";
 
 // Loop through the problems and an overall header for each one.
  foreach ($problems as $problem) {
    $table .= "<th class='sort-left-border sort-right-border sort-table-problem-header' colspan='4'>$problem->name</th>";
  }
- $table .="</tr><tr>";  
+ $table .="</tr><tr> <td class='category'>Student Work</td>";  
  
  // Loop through the problems again and make a 2nd header row with the categories
  // for each one.
  foreach ($problems as $problem) {
   $table .= "
-    <th class='sort-left-border'>$categories[1]</th>
-    <th>$categories[2]</th>
-    <th>$categories[3]</th>
-    <th class='sort-right-border'>$categories[4]</th>
-"; 
+    <td class='sort-left-border category'>$categories[1]</td>
+    <td class='category'>$categories[2]</td>
+    <td class='category'>$categories[3]</td>
+    <td class='sort-right-border category'>$categories[4]</td>"; 
  }
  $table .="</tr>";
+ 
  
  // Sort the student work names to make them appear in alphabetical order.
  // Loop through the names and fill in the rows for each student work name.
@@ -167,7 +168,8 @@ echo $table;
 
 // Go back to the sort activity main page.
 echo "<div class='sort-action-links'>";
-echo "<a href='view.php?s=$sid'>Back to All Problems</a>";
+echo "<span><a href='problem.php?id=$pid'>Back to the problem</a></span>";
+echo "<span><a href='view.php?s=$sid'>Sort index</a></span>";
 echo "</div>";  
 
 // Finish the page

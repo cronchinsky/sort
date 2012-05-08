@@ -428,8 +428,7 @@ function sort_get_coursemodule_info($coursemodule) {
     
     $info = new stdClass();
     $info->name = $sort->name;
-
-
+	
     if ($sort->display != RESOURCELIB_DISPLAY_POPUP) {
         return $info;
     }

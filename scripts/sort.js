@@ -1,5 +1,9 @@
 $(function() {
-
+    
+    // Turns off funky refresh behavior in firefox.  Hidden form holds
+    // data from before refresh.
+    if($.browser.mozilla) $("form").attr("autocomplete", "off");
+    
     // Directions box
     $directionsBox = $('.sort-directions-box');
     $directionsBox.find('.sort-directions-content').hide();
@@ -110,6 +114,7 @@ $(function() {
 
         if ( $modal.length ) {
             $modal.dialog( "open" );
+            $modal.dialog("option", "position", "top");
         } else {
             var img = $( "<img class='sort-modal-image' alt='" + title + "' style='display: none; padding: 8px;' />" )
             .attr( "src", src ).appendTo( "body" );
@@ -119,6 +124,7 @@ $(function() {
                     width: $(this).width()+16,
                     modal: true
                 });
+                $(this).dialog("option", "position", "top");
             });
 
 

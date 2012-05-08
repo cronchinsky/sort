@@ -63,11 +63,14 @@ $PAGE->set_title(format_string("Adding a new problem"));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->add_body_class('sort-problem-add-form');
+$PAGE->requires->css('/mod/sort/css/sort.css');
+
+sort_set_display_type($sort);
 
 // Output starts here
 $mform = new sort_new_problem_form("/mod/sort/newproblem.php?sid={$sort->id}");
 
-sort_set_display_type($sort);
+
 
 // If the form was cancelled, return to the problem page.
 if ($mform->is_cancelled()) {
@@ -84,9 +87,11 @@ else if ($results = $mform->get_data()) {
 else {
   echo $OUTPUT->header();
   echo $OUTPUT->heading("Adding a new problem to {$sort->name}");
-
+  echo "<div class='sort-problem-wrapper'>";
   // Display the form.
   $mform->display();
+
+  echo "</div>";
 
   // Finish the page
   echo $OUTPUT->footer();

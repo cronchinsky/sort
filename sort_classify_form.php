@@ -26,6 +26,6 @@ class sort_classify_form extends moodleform {
         }
         
         $mform->addElement('hidden','swids',$swids);
-        $this->add_action_buttons();
+        $this->add_action_buttons(false);
     }                           
 }                               
