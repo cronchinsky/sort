@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/sort/db" VERSION="20120425" COMMENT="XMLDB file for Moodle mod/sort"
+<XMLDB PATH="mod/sort/db" VERSION="20120508" COMMENT="XMLDB file for Moodle mod/sort"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -13,11 +13,15 @@
         <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro" NEXT="timecreated"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="introformat" NEXT="timemodified"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated" NEXT="category_1"/>
-        <FIELD NAME="category_1" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="timemodified" NEXT="category_2"/>
-        <FIELD NAME="category_2" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="category_1" NEXT="category_3"/>
-        <FIELD NAME="category_3" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="category_2" NEXT="category_4"/>
-        <FIELD NAME="category_4" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="category_3" NEXT="display"/>
-        <FIELD NAME="display" TYPE="int" LENGTH="5" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="category_4" NEXT="popupheight"/>
+        <FIELD NAME="category_1" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="timemodified" NEXT="category_1_exampletext"/>
+        <FIELD NAME="category_1_exampletext" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="Text explaining the image uploaded as an example for category 1" PREVIOUS="category_1" NEXT="category_2"/>
+        <FIELD NAME="category_2" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="category_1_exampletext" NEXT="category_2_exampletext"/>
+        <FIELD NAME="category_2_exampletext" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="Text to explain the category 2 example" PREVIOUS="category_2" NEXT="category_3"/>
+        <FIELD NAME="category_3" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="category_2_exampletext" NEXT="category_3_exampletext"/>
+        <FIELD NAME="category_3_exampletext" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="Text to explain the example for category 3." PREVIOUS="category_3" NEXT="category_4"/>
+        <FIELD NAME="category_4" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="category_3_exampletext" NEXT="category_4_exampletext"/>
+        <FIELD NAME="category_4_exampletext" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="Text that explains the category 4 example." PREVIOUS="category_4" NEXT="display"/>
+        <FIELD NAME="display" TYPE="int" LENGTH="5" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="category_4_exampletext" NEXT="popupheight"/>
         <FIELD NAME="popupheight" TYPE="int" LENGTH="5" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="display" NEXT="popupwidth"/>
         <FIELD NAME="popupwidth" TYPE="int" LENGTH="5" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="popupheight"/>
       </FIELDS>

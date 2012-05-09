@@ -71,7 +71,8 @@ function sort_add_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
     $sort->timecreated = time();
 
     # You may have to add extra stuff in here #
-
+    
+    
     return $DB->insert_record('sort', $sort);
 }
 
@@ -93,6 +94,8 @@ function sort_update_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
     $sort->id = $sort->instance;
 
     # You may have to add extra stuff in here #
+    
+    
 
     return $DB->update_record('sort', $sort);
 }

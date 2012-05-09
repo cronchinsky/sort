@@ -66,18 +66,49 @@ class mod_sort_mod_form extends moodleform_mod {
 
         // Adding the standard "intro" and "introformat" fields
         $this->add_intro_editor();
-
         //-------------------------------------------------------------------------------
         // Adding the rest of sort settings, spreeading all them into this fieldset
         // or adding more fieldsets ('header' elements) if needed for better logic
-        $mform->addElement('header', 'sort-categories-fieldset-header', get_string('sortcategoriesfieldsetheader', 'sort'));
-
-          $mform->addElement('static', 'category-label', '', get_string('sortcategorylabel','sort'));        
+          $mform->addElement('header', 'sort-categories-fieldset-header sort-category-1', 'Category 1');
+          
           $mform->addElement('text', 'category_1', get_string('category1', 'sort'));
+          $mform->addRule('category_1', 'This field is required', 'required');
+          $mform->addElement('filemanager', 'category_1_exampleimage', 'Category 1 Example Image', null,
+                    array('subdirs' => 0, 'maxbytes' => 33554432, 'maxfiles' => 1,
+                          ));
+          $mform->addRule('category_1_exampleimage', 'This field is required', 'required');
+          $mform->addElement('textarea', 'category_1_exampletext', 'Example Explanation');
+          $mform->addRule('category_1_exampletext','This field is required','required');
+          
+          $mform->addElement('header', 'sort-categories-fieldset-header sort-category-2', 'Category 2');
           $mform->addElement('text', 'category_2', get_string('category2', 'sort'));
+          $mform->addRule('category_2', 'This field is required', 'required');
+          $mform->addElement('filemanager', 'category_1_exampleimage', 'Category 2 Example Image', null,
+                    array('subdirs' => 0, 'maxbytes' => 33554432, 'maxfiles' => 1,
+                          ));
+          $mform->addRule('category_2_exampleimage', 'This field is required', 'required');
+          $mform->addElement('textarea', 'category_2_exampletext', 'Example Explanation');
+          $mform->addRule('category_2_exampletext','This field is required','required');
+          
+          $mform->addElement('header', 'sort-categories-fieldset-header sort-category-3', 'Category 3');
           $mform->addElement('text', 'category_3', get_string('category3', 'sort'));
+          $mform->addRule('category_3', 'This field is required', 'required');
+          $mform->addElement('filemanager', 'category_3_exampleimage', 'Category 3 Example Image', null,
+                    array('subdirs' => 0, 'maxbytes' => 33554432, 'maxfiles' => 1,
+                          ));
+          $mform->addRule('category_3_exampleimage', 'This field is required', 'required');
+          $mform->addElement('textarea', 'category_3_exampletext', 'Example Explanation');
+          $mform->addRule('category_3_exampletext','This field is required','required');
+          
+        $mform->addElement('header', 'sort-categories-fieldset-header sort-category-4', 'Category 4');
           $mform->addElement('text', 'category_4', get_string('category4', 'sort'));
-
+          $mform->addRule('category_4', 'This field is required', 'required');
+          $mform->addElement('filemanager', 'category_4_exampleimage', 'Category 4 Example Image', null,
+                    array('subdirs' => 0, 'maxbytes' => 33554432, 'maxfiles' => 1,
+                          ));
+          $mform->addRule('category_4_exampleimage', 'This field is required', 'required');
+          $mform->addElement('textarea', 'category_4_exampletext', 'Example Explanation');
+          $mform->addRule('category_4_exampletext','This field is required','required');
     
     
     	//----------------------------------------------------------------------------------
@@ -131,4 +162,22 @@ class mod_sort_mod_form extends moodleform_mod {
         // add standard buttons, common to all modules
         $this->add_action_buttons();
     }
+    
+    
+    
+  public function data_preprocessing(&$data) {
+     if ($this->current->instance) {
+
+
+      $draftitemid1 = file_get_submitted_draft_itemid('category_1_exampleimage');
+      $draftarea1 = file_prepare_draft_area($draftitemid1, $this->context->id, 'mod_sort', 'categoryimages', 0);
+
+      
+     }
+  }
+  
+
+
+
+
 }
