@@ -36,7 +36,11 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sid"/>
         <FIELD NAME="sid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Sort id" PREVIOUS="id" NEXT="name"/>
-        <FIELD NAME="name" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="Problem name" PREVIOUS="sid"/>
+        <FIELD NAME="name" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="Problem name" PREVIOUS="sid" NEXT="category_1_oldtotal"/>
+        <FIELD NAME="category_1_oldtotal" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="The total number of previous votes for this category for this problem" PREVIOUS="name" NEXT="category_2_oldtotal"/>
+        <FIELD NAME="category_2_oldtotal" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="The total number of previous votes for this category for this problem" PREVIOUS="category_1_oldtotal" NEXT="category_3_oldtotal"/>
+        <FIELD NAME="category_3_oldtotal" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="The total number of previous votes for this category for this problem" PREVIOUS="category_2_oldtotal" NEXT="category_4_oldtotal"/>
+        <FIELD NAME="category_4_oldtotal" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="The total number of previous votes for this category for this problem" PREVIOUS="category_3_oldtotal"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="sid"/>

@@ -29,6 +29,9 @@ $(function() {
     });
     
     
+    // Examples Accordion
+    $('#accordion').accordion({collapsible:true, active:false, autoHeight:false});
+    
     // there's the gallery and the categories
     var $gallery = $( "#sort-gallery" );
     $categories = $( ".sort-category" );

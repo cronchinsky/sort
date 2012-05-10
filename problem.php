@@ -71,6 +71,20 @@ $categories = array(
   '4' => $sort->category_4,
 );
 
+$exampletexts = array(
+  '1' => $sort->category_1_exampletext,
+  '2' => $sort->category_2_exampletext,
+  '3' => $sort->category_3_exampletext,
+  '4' => $sort->category_4_exampletext,
+);
+
+$images = array(
+  '1' =>$DB->get_record_select('files', "filesize <> 0 AND component = 'mod_sort' AND contextid = '$context->id' AND filearea= 'catoneimg'"),
+  '2' =>$DB->get_record_select('files', "filesize <> 0 AND component = 'mod_sort' AND contextid = '$context->id' AND filearea= 'cattwoimg'"),
+  '3' =>$DB->get_record_select('files', "filesize <> 0 AND component = 'mod_sort' AND contextid = '$context->id' AND filearea= 'catthreeimg'"),
+  '4' =>$DB->get_record_select('files', "filesize <> 0 AND component = 'mod_sort' AND contextid = '$context->id' AND filearea= 'catfourimg'"),
+);
+
 
 // If we have no js, update the individual categorization from the url
 if ($nojs_category && $nojs_swid) {
@@ -291,6 +305,21 @@ echo '<span class="sort-back-link-box"><a href="view.php?s=' . $sort->id . '">So
 if (has_capability('mod/sort:edit', $context)) {
 echo '<span class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage student work</a></span>';
 }
+echo "</div>";
+echo "<div class='sort-examples-accordion'>";
+echo "<h3>Examples</h3>";
+echo '<div id="accordion">';
+
+foreach ($categories as $key=>$category) {
+  if ($key != 0) {
+    echo "<h3>" . $category . "</h3>";
+    echo "<div class='sort-examples-accordion-body'>";
+    echo "<img src='" . sort_get_image_file_url($images[$key]) . "' />";
+    echo $exampletexts[$key];
+    echo "</div>";
+  }
+}
+echo '</div>';
 echo "</div>";
 echo '</div>';
 // Finish the page

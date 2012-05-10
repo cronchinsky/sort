@@ -45,7 +45,7 @@ class mod_sort_mod_form extends moodleform_mod {
     
     	global $CFG, $DB;
 
-        $mform = $this->_form;
+        $mform =& $this->_form;
         
         $config = get_config('sort');
 
@@ -73,40 +73,40 @@ class mod_sort_mod_form extends moodleform_mod {
           
           $mform->addElement('text', 'category_1', get_string('category1', 'sort'));
           $mform->addRule('category_1', 'This field is required', 'required');
-          $mform->addElement('filemanager', 'category_1_exampleimage', 'Category 1 Example Image', null,
+          $mform->addElement('filemanager', 'catoneimg', 'Category 1 Example Image', null,
                     array('subdirs' => 0, 'maxbytes' => 33554432, 'maxfiles' => 1,
                           ));
-          $mform->addRule('category_1_exampleimage', 'This field is required', 'required');
+          //$mform->addRule('catoneimg', 'This field is required', 'required');
           $mform->addElement('textarea', 'category_1_exampletext', 'Example Explanation');
           $mform->addRule('category_1_exampletext','This field is required','required');
           
           $mform->addElement('header', 'sort-categories-fieldset-header sort-category-2', 'Category 2');
           $mform->addElement('text', 'category_2', get_string('category2', 'sort'));
           $mform->addRule('category_2', 'This field is required', 'required');
-          $mform->addElement('filemanager', 'category_1_exampleimage', 'Category 2 Example Image', null,
+          $mform->addElement('filemanager', 'cattwoimg', 'Category 2 Example Image', null,
                     array('subdirs' => 0, 'maxbytes' => 33554432, 'maxfiles' => 1,
                           ));
-          $mform->addRule('category_2_exampleimage', 'This field is required', 'required');
+          //$mform->addRule('cattwoimg', 'This field is required', 'required');
           $mform->addElement('textarea', 'category_2_exampletext', 'Example Explanation');
           $mform->addRule('category_2_exampletext','This field is required','required');
           
           $mform->addElement('header', 'sort-categories-fieldset-header sort-category-3', 'Category 3');
           $mform->addElement('text', 'category_3', get_string('category3', 'sort'));
           $mform->addRule('category_3', 'This field is required', 'required');
-          $mform->addElement('filemanager', 'category_3_exampleimage', 'Category 3 Example Image', null,
+          $mform->addElement('filemanager', 'catthreeimg', 'Category 3 Example Image', null,
                     array('subdirs' => 0, 'maxbytes' => 33554432, 'maxfiles' => 1,
                           ));
-          $mform->addRule('category_3_exampleimage', 'This field is required', 'required');
+          //$mform->addRule('catthreeimg', 'This field is required', 'required');
           $mform->addElement('textarea', 'category_3_exampletext', 'Example Explanation');
           $mform->addRule('category_3_exampletext','This field is required','required');
           
         $mform->addElement('header', 'sort-categories-fieldset-header sort-category-4', 'Category 4');
           $mform->addElement('text', 'category_4', get_string('category4', 'sort'));
           $mform->addRule('category_4', 'This field is required', 'required');
-          $mform->addElement('filemanager', 'category_4_exampleimage', 'Category 4 Example Image', null,
+          $mform->addElement('filemanager', 'catfourimg', 'Category 4 Example Image', null,
                     array('subdirs' => 0, 'maxbytes' => 33554432, 'maxfiles' => 1,
                           ));
-          $mform->addRule('category_4_exampleimage', 'This field is required', 'required');
+          //$mform->addRule('catfourimg', 'This field is required', 'required');
           $mform->addElement('textarea', 'category_4_exampletext', 'Example Explanation');
           $mform->addRule('category_4_exampletext','This field is required','required');
     
@@ -164,14 +164,22 @@ class mod_sort_mod_form extends moodleform_mod {
     }
     
     
-    
   public function data_preprocessing(&$data) {
      if ($this->current->instance) {
-
-
-      $draftitemid1 = file_get_submitted_draft_itemid('category_1_exampleimage');
-      $draftarea1 = file_prepare_draft_area($draftitemid1, $this->context->id, 'mod_sort', 'categoryimages', 0);
-
+       $itemid1 = file_get_submitted_draft_itemid('catoneimg');
+       $itemid2 = file_get_submitted_draft_itemid('cattwoimg');
+       $itemid3 = file_get_submitted_draft_itemid('catthreeimg');
+       $itemid4 = file_get_submitted_draft_itemid('catfourimg');
+       
+       file_prepare_draft_area($itemid1, $this->context->id, 'mod_sort', 'catoneimg', 1, array('subdirs' => 0, 'maxfiles' => 1));
+       file_prepare_draft_area($itemid2, $this->context->id, 'mod_sort', 'cattwoimg', 2, array('subdirs' => 0, 'maxfiles' => 1));
+       file_prepare_draft_area($itemid3, $this->context->id, 'mod_sort', 'catthreeimg', 3, array('subdirs' => 0, 'maxfiles' => 1));
+       file_prepare_draft_area($itemid4, $this->context->id, 'mod_sort', 'catfourimg', 4, array('subdirs' => 0, 'maxfiles' => 1));
+       
+       $data['catoneimg'] = $itemid1;
+       $data['cattwoimg'] = $itemid2;
+       $data['catthreeimg'] = $itemid3;
+       $data['catfourimg'] = $itemid4;
       
      }
   }

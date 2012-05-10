@@ -450,3 +450,15 @@ li.sort-pager-link-1:before {
 .sort-studentwork-comment-form-header {
     cursor:pointer;
 }
+
+.sort-examples-accordion .ui-accordion-header {
+    padding-left:30px;
+}
+
+.sort-examples-accordion-body img {
+    width:100%;
+}
+
+.sort-examples-accordion {
+    padding-top:30px;
+}

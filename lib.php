@@ -72,8 +72,21 @@ function sort_add_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
 
     # You may have to add extra stuff in here #
     
+    $new_id =  $DB->insert_record('sort', $sort, true);
+   
+    $results = $mform->get_data();
+    //exit('<pre>'. var_export($sort, true).'</pre>');
+    $cmid = $sort->coursemodule;
+
+    $DB->set_field('course_modules', 'instance', $new_id, array('id'=>$cmid));
+       
+    $context = get_context_instance(CONTEXT_MODULE, $cmid);
+    file_save_draft_area_files($results->catoneimg, $context->id, 'mod_sort', 'catoneimg', 1);
+    file_save_draft_area_files($results->cattwoimg, $context->id, 'mod_sort', 'cattwoimg', 2);
+    file_save_draft_area_files($results->catthreeimg, $context->id, 'mod_sort', 'catthreeimg', 3);
+    file_save_draft_area_files($results->catfourimg, $context->id, 'mod_sort', 'catfourimg', 4);
     
-    return $DB->insert_record('sort', $sort);
+    return $new_id;
 }
 
 /**
@@ -92,12 +105,29 @@ function sort_update_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
 
     $sort->timemodified = time();
     $sort->id = $sort->instance;
-
+    
+    
+    
+    $new_id = $DB->update_record('sort', $sort);
+    
     # You may have to add extra stuff in here #
     
+    $results = $mform->get_data();
+    $cmid = $sort->coursemodule;
     
+    
+    //$course = $DB->get_record('course', array('id' => $sort->course));
+    //$DB->set_field('course_modules', 'instance', $new_id, array('id'=>$cmid));
+        
+    $context = get_context_instance(CONTEXT_MODULE, $cmid);
+    
+    file_save_draft_area_files($results->catoneimg, $context->id, 'mod_sort', 'catoneimg', 1);
+    file_save_draft_area_files($results->cattwoimg, $context->id, 'mod_sort', 'cattwoimg', 2);
+    file_save_draft_area_files($results->catthreeimg, $context->id, 'mod_sort', 'catthreeimg', 3);
+    file_save_draft_area_files($results->catfourimg, $context->id, 'mod_sort', 'catfourimg', 4);
 
-    return $DB->update_record('sort', $sort);
+    return true;
+
 }
 
 /**
@@ -464,4 +494,4 @@ function sort_set_display_type($sort) {
  */
 function etlo_debug($variables) {
   echo "<pre>" . var_export($variables,TRUE) . "</pre>";
-}
+} 

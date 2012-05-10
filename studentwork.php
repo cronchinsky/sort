@@ -135,10 +135,10 @@ foreach($classifications as $classification) {
 }
 
 $score_totals = array(
-  '1'=> 0,
-  '2'=> 0,
-  '3'=> 0,
-  '4'=> 0,
+  '1'=> $problem->category_1_oldtotal,
+  '2'=> $problem->category_2_oldtotal,
+  '3'=> $problem->category_3_oldtotal,
+  '4'=> $problem->category_4_oldtotal,
 );
 $uids = array();
 $all_classifications = $DB->get_records('sort_classification', array('swid' => $swid));
@@ -147,6 +147,14 @@ foreach($all_classifications as $classification) {
   $uids[] = $classification->uid;
 }
 
+$all_votes_total = array_sum($score_totals);
+
+foreach ($score_totals as $key=>$total) {
+  if ($key != 4) $percentages[$key] = round($total/$all_votes_total * 100);
+  else $percentages[4] = 100 - $percentages[1] - $percentages[2] - $percentages[3];
+}
+  
+  
 $users = $DB->get_records_list('user','id',$uids);
 
 
@@ -195,10 +203,10 @@ echo "<h3>How did I sort the work?</h3>";
 echo "<p><em>" . $categories[$this_classification->category] . "</em></p>";
 echo "</div></div>";
 echo "<div class='sort-others-classification-wrapper'><div class='sort-others-classification'>";
-echo "<h3>How did the class sort the work?</h3>";
+echo "<h3>How have others sorted the work?</h3>";
 echo "<table class='sort-others-table'>";
-foreach ($score_totals as $cat_index => $total) {
-  echo "<tr><td><em>" . $categories[$cat_index] . "</em></td><td>" . $total . "</td></tr>";
+foreach ($percentages as $cat_index => $precentage) {
+  echo "<tr><td><em>" . $categories[$cat_index] . "</em></td><td>" . $precentage . "% (" . $score_totals[$cat_index] ." classifications)</td></tr>";
 }
 echo "</table>";
 echo "</div></div>";
