@@ -34,6 +34,7 @@ require_once(dirname(__FILE__).'/sort_comment_form.php');
 
 $swid = optional_param('id', 0, PARAM_INT); // studentwork ID
 $pid = optional_param('pid', 0, PARAM_INT); // pid
+
 $studentwork = $DB->get_record('sort_studentwork',array('id' => $swid));
 
 if ($studentwork) {

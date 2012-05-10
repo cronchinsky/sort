@@ -136,8 +136,10 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading("Manage Student Work for {$problem->name}");
 
 echo "<div class='sort-student-work-wrapper'>";
-echo "<h3>Select a piece of student work to edit, or click \"Add New\" to create a new piece of student work to sort.</h3>";
-echo "<ul class='sort-student-work-pager'>";
+
+echo "<div class='sort-student-work-pager'>";
+echo "<h4>Select a piece of student work to edit,<br /> or click \"Add New\" to create a new piece of student work to sort.</h4>";
+echo "<ul>";
 foreach ($studentworks as $studentwork) {
   $class = ($swid == $studentwork->id) ? "class=\"sort-pager-current\"" : ""; 
   echo '<li ' . $class . '><a href="' . $CFG->wwwroot . '/mod/sort/editstuwork.php?pid=' . $studentwork->pid . '&amp;swid=' . $studentwork->id . '">' . $studentwork->name . '</a></li>';
@@ -145,11 +147,12 @@ foreach ($studentworks as $studentwork) {
 $class = (!$swid) ? ' class="sort-pager-current" ' : "";
 echo '<li' . $class . '><a href="' . $CFG->wwwroot . '/mod/sort/editstuwork.php?pid=' . $problem->id . '">Add New</a></li>';
 echo "</ul>";
+echo "</div>";
 
 echo "<div class='sort-manage-form-wrapper'>";
 if ($swid) echo "<p class='sort-delete-link'><a href='deletestuwork.php?swid=$swid'>Delete this sample</a></p>";
-if ($swid) echo $OUTPUT->heading("Editing $stuwork->name");
-else echo $OUTPUT->heading("Adding New Student Work");
+if ($swid) echo "<h4>Editing $stuwork->name</h4>";
+else echo "<h4>Adding New Student Work</h4>";
 
 //displays the form
 $mform->display();

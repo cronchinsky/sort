@@ -114,10 +114,6 @@ function sort_update_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
     
     $results = $mform->get_data();
     $cmid = $sort->coursemodule;
-    
-    
-    //$course = $DB->get_record('course', array('id' => $sort->course));
-    //$DB->set_field('course_modules', 'instance', $new_id, array('id'=>$cmid));
         
     $context = get_context_instance(CONTEXT_MODULE, $cmid);
     

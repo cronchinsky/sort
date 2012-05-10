@@ -244,6 +244,24 @@ li.sort-pager-link-1:before {
     text-align: left;
 }
 
+.sort-no-work-wrapper {
+	margin-top:5px;
+    padding:30px 30px 30px 10px;
+    border: 1px solid #d3d3d3;
+    border-radius: 15px;
+    text-align: left;
+}
+
+.sort-no-work-wrapper h2 {
+	text-align: center;
+	margin: 20px 0 40px 0;
+}
+
+.sort-student-work-wrapper .fitem .fsubmit{
+	margin-left: 0;
+	width: 100%;
+}
+
 .sort-work-sample {
 	height: 200px;
 	overflow: auto;
@@ -362,6 +380,19 @@ li.sort-pager-link-1:before {
 .sort-problem-wrapper .fgroup {
 	text-align: center;
 	
+}
+
+.sort-problem-wrapper .fitem  {
+	margin-top: 20px;	
+}
+
+.sort-problem-wrapper .fitem .fitemtitle {
+	width: 25%;	
+}
+
+.sort-problem-wrapper .fitem .felement {
+	width: 70%;
+	margin-left: 26%;	
 }
 
 .sort-problem-list {

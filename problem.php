@@ -291,7 +291,7 @@ else {
   // Output starts here
   echo $OUTPUT->header();
   // If there's no student work tied to this problem, the teachers should add some.
-  echo "<div>No Student Work!  Add some!";
+  echo "<div class='sort-no-work-wrapper'><h2>No Student Work!  Add some!</h2>";
 }
 
 
