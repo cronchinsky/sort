@@ -77,13 +77,7 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading("Your Classifications for $problem->name");
 
 // Get categories from sort object.
-$categories = array(
-          '0' => 'None',
-          '1' => ucwords($sort->category_1),
-          '2' => ucwords($sort->category_2),
-          '3' => ucwords($sort->category_3),
-          '4' => ucwords($sort->category_4),
- );
+$categories = sort_get_categories($sort->id, $context);
 
 //Get all classifications associated with this problem for this user.
 $studentworks = $DB->get_records('sort_studentwork', array('pid' => $problem->id), 'name');
@@ -106,20 +100,17 @@ foreach ($classifications as $classification) {
 $table = "
 <table class='sort-my-scores-table'>
   <tr>
-    <th>Student Work</th>
-    <th>$categories[1]</th>
-    <th>$categories[2]</th>
-    <th>$categories[3]</th>
-    <th>$categories[4]</th>
-  </tr>
-";
+    ";
+foreach ($categories as $category) {
+  $table .= "<th>$category->name</th>";
+}
 
 
 foreach ($studentworks as $studentwork) {
 $table .= "<tr><td>$studentwork->name</td>";
-
-foreach (array(1,2,3,4) as $category) {
-  if (isset($classifications_indexed[$studentwork->id]) && $classifications_indexed[$studentwork->id]->category == $category) {
+}
+foreach ($categories as $category) {
+  if (isset($classifications_indexed[$studentwork->id]) && $classifications_indexed[$studentwork->id]->category == $category->category) {
     $table .="<td>X</td>";
   }
   else {
@@ -128,10 +119,8 @@ foreach (array(1,2,3,4) as $category) {
 }
 
 
-
 $table .="</tr>";
 
-}
 $table .= "</table>";
 echo $table;
 echo "<div class='sort-action-links'>";

@@ -11,13 +11,7 @@ class sort_classify_form extends moodleform {
         $mform =& $this->_form;
         $studentworks = $this->_customdata['studentworks'];
         $sort = $this->_customdata['sort'];
-        $categories = array(
-          '0' => 'None',
-          '1' => $sort->category_1,
-          '2' => $sort->category_2,
-          '3' => $sort->category_3,
-          '4' => $sort->category_4,
-        );
+        $categories = $this->_customdata['categories'];
         
         $swids = "";
         foreach ($studentworks as $studentwork) {

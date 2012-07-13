@@ -57,7 +57,9 @@ $swids.=")";
 
 
 if (optional_param('pid', 0, PARAM_INT)) {
-
+  if ($swids == ")") {
+    print_error("No student work has been created yet!");
+  }
   $user_classification = $DB->get_record_select('sort_classification', "uid = $USER->id AND swid IN $swids ",array(),'*',IGNORE_MULTIPLE);
   if (!$user_classification) {
     redirect("problem.php?id=$pid","You need to sort some student work before you can examine these results");
@@ -104,13 +106,7 @@ add_to_log($course->id, 'sort', 'view', "studentwork.php?id=$swid", $this_studen
 
 
 // Get categories from sort object.
-$categories = array(
-          '0' => 'None',
-          '1' => ucwords($sort->category_1),
-          '2' => ucwords($sort->category_2),
-          '3' => ucwords($sort->category_3),
-          '4' => ucwords($sort->category_4),
- );
+$categories = sort_get_categories($sort->id, $context);
 
 $arguments = array(
     'contextid' => $context->id,
@@ -135,12 +131,7 @@ foreach($classifications as $classification) {
   $classifications_indexed[$classification->swid] = $classification;
 }
 
-$score_totals = array(
-  '1'=> $problem->category_1_oldtotal,
-  '2'=> $problem->category_2_oldtotal,
-  '3'=> $problem->category_3_oldtotal,
-  '4'=> $problem->category_4_oldtotal,
-);
+$score_totals = unserialize($problem->previous_data);
 $uids = array();
 $all_classifications = $DB->get_records('sort_classification', array('swid' => $swid));
 foreach($all_classifications as $classification) {
@@ -201,13 +192,14 @@ echo "<div class='sort-classification-wrapper'>";
 
 echo "<div class='sort-user-classification-wrapper'><div class='sort-user-classification'>";
 echo "<h3>How did I sort the work?</h3>";
-echo "<p><em>" . $categories[$this_classification->category] . "</em></p>";
+$cat_index = $this_classification->category;
+echo "<p><em>" . $categories[$cat_index]->category . "</em></p>";
 echo "</div></div>";
 echo "<div class='sort-others-classification-wrapper'><div class='sort-others-classification'>";
 echo "<h3>How have others sorted the work?</h3>";
 echo "<table class='sort-others-table'>";
 foreach ($percentages as $cat_index => $precentage) {
-  echo "<tr><td><em>" . $categories[$cat_index] . "</em></td><td>" . $precentage . "% (" . $score_totals[$cat_index] ." classifications)</td></tr>";
+  echo "<tr><td><em>" . $categories[$cat_index]->category . "</em></td><td>" . $precentage . "% (" . $score_totals[$cat_index] ." classifications)</td></tr>";
 }
 echo "</table>";
 echo "</div></div>";
@@ -226,13 +218,13 @@ echo '<div class="sort-studentwork-comments">';
 
 echo "<h3>Explanations</h3>";
 echo "<p>View other participant's explanations.</p>";
-echo "<div id='sort-filter-container' >Filter: <select id='sort-comment-filter'>
-  <option value='0'>- All -</option>
-  <option value='1'>$categories[1]</option>
-  <option value='2'>$categories[2]</option>
-  <option value='3'>$categories[3]</option>
-  <option value='4'>$categories[4]</option>
-</select></div>
+echo "<div id='sort-filter-container' >Filter: <select id='sort-comment-filter'>";
+echo "<option value='0'>- All -</option>";
+foreach ($categories as $cat_id => $category)  {
+  echo "<option value='$cat_id'>$category->category</option>";
+}
+  
+echo "</select></div>
 ";
 $first = true;
 foreach ($all_classifications as $classification) {
@@ -243,7 +235,7 @@ foreach ($all_classifications as $classification) {
       $class .= ' sort-comment-first';
     }
     echo "<div class='$class'>";
-    echo "<div class='sort-comment-username'><strong>" . $users[$classification->uid]->username . "</strong> - <em>" . $categories[$classification->category] . "</em></div> ";
+    echo "<div class='sort-comment-username'><strong>" . $users[$classification->uid]->username . "</strong> - <em>" . $categories[$classification->category]->category . "</em></div> ";
     echo "<div class='sort-comment-body'>" . format_text($classification->commenttext) . "</div>";
     echo "</div>";
   }

@@ -75,18 +75,8 @@ function sort_add_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
     $new_id =  $DB->insert_record('sort', $sort, true);
    
     $results = $mform->get_data();
-    //exit('<pre>'. var_export($sort, true).'</pre>');
-    $cmid = $sort->coursemodule;
-
-    $DB->set_field('course_modules', 'instance', $new_id, array('id'=>$cmid));
-       
-    $context = get_context_instance(CONTEXT_MODULE, $cmid);
-    file_save_draft_area_files($results->catoneimg, $context->id, 'mod_sort', 'catoneimg', 1);
-    file_save_draft_area_files($results->cattwoimg, $context->id, 'mod_sort', 'cattwoimg', 2);
-    file_save_draft_area_files($results->catthreeimg, $context->id, 'mod_sort', 'catthreeimg', 3);
-    file_save_draft_area_files($results->catfourimg, $context->id, 'mod_sort', 'catfourimg', 4);
-    
     return $new_id;
+   
 }
 
 /**
@@ -116,11 +106,7 @@ function sort_update_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
     $cmid = $sort->coursemodule;
         
     $context = get_context_instance(CONTEXT_MODULE, $cmid);
-    
-    file_save_draft_area_files($results->catoneimg, $context->id, 'mod_sort', 'catoneimg', 1);
-    file_save_draft_area_files($results->cattwoimg, $context->id, 'mod_sort', 'cattwoimg', 2);
-    file_save_draft_area_files($results->catthreeimg, $context->id, 'mod_sort', 'catthreeimg', 3);
-    file_save_draft_area_files($results->catfourimg, $context->id, 'mod_sort', 'catfourimg', 4);
+ 
 
     return true;
 
@@ -484,6 +470,16 @@ function sort_set_display_type($sort) {
   }
 } 
 
+
+function sort_get_categories($sid, $context) {
+  global $DB;
+  $categories = $DB->get_records('sort_category', array('sid' => $sid));
+  foreach ($categories as $key => $category) {
+    $categories[$key]->image = $DB->get_record_select('files', "filesize <> 0 AND component = 'mod_sort' AND contextid = '$context->id' AND filearea= 'categoryimage' AND itemid = '$key'");
+    $categories[$key]->html = "";
+  }
+  return $categories;
+}
 
 /**
  * Debugger.

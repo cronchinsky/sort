@@ -29,6 +29,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once("$CFG->libdir/resourcelib.php");
+require_once("$CFG->dirroot/mod/sort/lib.php");
+
 /**
  * Does something really useful with the passed things
  *

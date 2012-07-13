@@ -49,6 +49,9 @@ if ($id) {
 require_login($course, true, $cm);
 $context = get_context_instance(CONTEXT_MODULE, $cm->id);
 
+$categories = sort_get_categories($sort->id,$context);
+if (!$categories) redirect("managecategories.php?sid=$sort->id");
+
 add_to_log($course->id, 'sort', 'view', "view.php?id={$cm->id}", $sort->name, $cm->id);
 
 /// Print the page header
@@ -104,6 +107,7 @@ else {
 
 echo "<div class='sort-action-links'>";
 	if (has_capability('mod/sort:edit', $context)) echo "<span class='sort-add-problem-link-box'><a href='" . $CFG->wwwroot . '/mod/sort/newproblem.php?sid=' . $sid . "'>Add a new problem</a></span>";
+  if (has_capability('mod/sort:edit', $context)) echo "<span class='sort-add-problem-link-box'><a href='" . $CFG->wwwroot . '/mod/sort/managecategories.php?sid=' . $sid . "'>Manage Categories</a></span>";
 echo "</div>";
 // Finish the page
 echo $OUTPUT->footer();

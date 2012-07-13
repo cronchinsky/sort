@@ -72,14 +72,8 @@ echo $OUTPUT->header();
 
 echo $OUTPUT->heading("My class chart for $sort->name");
 
-// Get categories from sort object.
-$categories = array(
-          '0' => 'None',
-          '1' => ucwords($sort->category_1),
-          '2' => ucwords($sort->category_2),
-          '3' => ucwords($sort->category_3),
-          '4' => ucwords($sort->category_4),
- );
+// Get categories from sort object. 
+$categories = sort_get_categories($sort->id, $context);
 
 // Loop through the problems and create an array of their ids
 $pids = array();
@@ -132,11 +126,22 @@ $table = "
  // Loop through the problems again and make a 2nd header row with the categories
  // for each one.
  foreach ($problems as $problem) {
-  $table .= "
-    <td class='sort-left-border category'>$categories[1]</td>
-    <td class='category'>$categories[2]</td>
-    <td class='category'>$categories[3]</td>
-    <td class='sort-right-border category'>$categories[4]</td>"; 
+   $category_counter = 0;
+   
+   foreach ($categories as $category) {
+     if ($category_counter == 0) {
+       $class = 'sort-left-border category';
+     }
+     else if ($category_counter == sizeof($categories) - 1) {
+       $class = 'sort-right-border category';
+     }
+     else {
+       $class = 'category';
+     }
+     $category_counter++;
+   $table .= "<td class='$class'>$category->category</td>";
+ 
+   }
  }
  $table .="</tr>";
  
@@ -148,16 +153,18 @@ foreach ($sw_names as $name) {
   $table .= "<tr>";
   $table .= "<td>$name</td>";
   foreach ($problems as $problem) {
-    foreach (array(1,2,3,4) as $category) {
+    $category_counter = 0;
+    foreach ($categories as $category) {
       $class = "";
-      if ($category==1) $class = ' class="sort-left-border" ';
-      if ($category==4) $class = ' class="sort-right-border" ';
-      if (isset($classifications_indexed[$name][$problem->id][$category])) {
+      if ($category_counter == 0) $class = ' class="sort-left-border" ';
+      if ($category_counter == sizeof($categories) - 1) $class = ' class="sort-right-border" ';
+      if (isset($classifications_indexed[$name][$problem->id][$category->id])) {
         $table .= "<td$class>X</td>";
       }
       else {
         $table .= "<td$class></td>";
       }
+      $category_counter++;
     }
   }
 }

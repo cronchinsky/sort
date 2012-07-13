@@ -5,6 +5,7 @@
     display:inline-block;
 }
 
+
 .sort-directions-box legend span.sort-directions-text {
     font-size:16px;
     position:relative;
@@ -41,7 +42,7 @@
 
 #sort-gallery { 
 	 width: 100%;
-	 min-height: 12em;
+	 min-height: 300px;
          position:relative;
 }
   
@@ -78,10 +79,11 @@
 	
 #sort-gallery .sort-studentwork {
   width: 100%;
-  height:200px;
+  height:300px;
   margin: 0 0.4em 0.4em 0;
   text-align: center;
-  overflow:hidden;
+  overflow:scroll;
+  
 }
 
 .sort-gallery-end-message p {
@@ -137,7 +139,7 @@
 .sort-category {
   
   margin:20px .5%;
-  width: 23%;
+  width: 18%;
   height:18em;
   border-width:1px;
   display: inline-block;
@@ -491,5 +493,16 @@ li.sort-pager-link-1:before {
 }
 
 .sort-examples-accordion {
-    padding-top:30px;
+    padding-top: 5px;
+}
+
+.sort-category-add-box {
+    
+    margin-top:60px;
+}
+
+.sort-category-info {
+    border:1px solid black;
+    margin-bottom:20px;
+    padding:10px;
 }

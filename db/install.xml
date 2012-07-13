@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/sort/db" VERSION="20120508" COMMENT="XMLDB file for Moodle mod/sort"
+<XMLDB PATH="mod/sort/db" VERSION="20120711" COMMENT="XMLDB file for Moodle mod/sort"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -36,11 +36,8 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sid"/>
         <FIELD NAME="sid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Sort id" PREVIOUS="id" NEXT="name"/>
-        <FIELD NAME="name" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="Problem name" PREVIOUS="sid" NEXT="category_1_oldtotal"/>
-        <FIELD NAME="category_1_oldtotal" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="The total number of previous votes for this category for this problem" PREVIOUS="name" NEXT="category_2_oldtotal"/>
-        <FIELD NAME="category_2_oldtotal" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="The total number of previous votes for this category for this problem" PREVIOUS="category_1_oldtotal" NEXT="category_3_oldtotal"/>
-        <FIELD NAME="category_3_oldtotal" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="The total number of previous votes for this category for this problem" PREVIOUS="category_2_oldtotal" NEXT="category_4_oldtotal"/>
-        <FIELD NAME="category_4_oldtotal" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="The total number of previous votes for this category for this problem" PREVIOUS="category_3_oldtotal"/>
+        <FIELD NAME="name" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="Problem name" PREVIOUS="sid" NEXT="previous_data"/>
+        <FIELD NAME="previous_data" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="A serialized array of previous totals for the set of categories." PREVIOUS="name"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="sid"/>
@@ -58,7 +55,7 @@
         <KEY NAME="pid" TYPE="foreign" FIELDS="pid" REFTABLE="sort_problem" REFFIELDS="id" COMMENT="problem id." PREVIOUS="primary"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="sort_classification" COMMENT="A users classification of a specific piece of student work." PREVIOUS="sort_studentwork">
+    <TABLE NAME="sort_classification" COMMENT="A users classification of a specific piece of student work." PREVIOUS="sort_studentwork" NEXT="sort_category">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="category"/>
         <FIELD NAME="category" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" COMMENT="The user's selected category." PREVIOUS="id" NEXT="commenttext"/>
@@ -71,6 +68,18 @@
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="swid"/>
         <KEY NAME="swid" TYPE="foreign" FIELDS="swid" REFTABLE="sort_studentwork" REFFIELDS="id" COMMENT="Student work id." PREVIOUS="primary" NEXT="uid"/>
         <KEY NAME="uid" TYPE="foreign" FIELDS="uid" REFTABLE="user" REFFIELDS="id" COMMENT="User id." PREVIOUS="swid"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="sort_category" COMMENT="A category that a piece of student work can be sorted into." PREVIOUS="sort_classification">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sid"/>
+        <FIELD NAME="sid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Sort ID" PREVIOUS="id" NEXT="category"/>
+        <FIELD NAME="category" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="Category Name" PREVIOUS="sid" NEXT="exampletext"/>
+        <FIELD NAME="exampletext" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="The text used for an example of this categorization" PREVIOUS="category"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="sid"/>
+        <KEY NAME="sid" TYPE="foreign" FIELDS="sid" REFTABLE="sort" REFFIELDS="id" COMMENT="The sort id" PREVIOUS="primary"/>
       </KEYS>
     </TABLE>
   </TABLES>

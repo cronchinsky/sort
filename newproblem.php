@@ -68,7 +68,7 @@ $PAGE->requires->css('/mod/sort/css/sort.css');
 sort_set_display_type($sort);
 
 // Output starts here
-$mform = new sort_new_problem_form("/mod/sort/newproblem.php?sid={$sort->id}",array('sort'=>$sort));
+$mform = new sort_new_problem_form("/mod/sort/newproblem.php?sid={$sort->id}",array('sort'=>$sort,'context' => $context));
 
 
 
@@ -81,11 +81,16 @@ else if ($results = $mform->get_data()) {
   // Load the data into a problem object and save it to the DB.
   $problem->sid = $sid;
   $problem->name = $results->problemname;
-  $problem->category_1_oldtotal = $results->category_1_oldtotal;
-  $problem->category_2_oldtotal = $results->category_2_oldtotal;
-  $problem->category_3_oldtotal = $results->category_3_oldtotal;
-  $problem->category_4_oldtotal = $results->category_4_oldtotal;
-  
+  $results_array = (array) $results;
+
+  if (isset($results_array['problemname'])) unset($results_array['problemname']);
+  if (isset($results_array['submitbutton'])) unset($results_array['submitbutton']);
+  $categories = array();
+  foreach($results_array as $key => $result) {
+    list($trash, $moretrash, $catid) = explode('_',$key);
+    $categories[$catid] = $result;
+  }
+  $problem->previous_data = serialize($categories);
   $DB->insert_record('sort_problem', $problem);
   redirect("view.php?s={$sort->id}");
 }
