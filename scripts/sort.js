@@ -79,6 +79,7 @@ $(function() {
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
             categorize( ui.draggable, $(this) );
+                    sortUpdateCorrect();
         }
     });
 
@@ -88,6 +89,7 @@ $(function() {
         activeClass: "custom-state-active",
         drop: function( event, ui ) {
             uncategorize( ui.draggable );
+                    sortUpdateCorrect();
         }
     });
 
@@ -103,13 +105,13 @@ $(function() {
                     width: "48px",
                     height: "3em"
                 });
+                sortUpdateCorrect();
             });
         });
         var swid = $item.attr('id').split('_').pop();
         var value = $category.attr('id').split('_').pop();
         $('[name=studentwork_classify_' + swid +']').val(value);
         $('[name=submitbutton]').addClass('needs-save');
-
     }
 
     // image uncategorize function
@@ -120,11 +122,14 @@ $(function() {
             .find( "img" )
             .end()
             .appendTo( $gallery )
-            .fadeIn();
+            .fadeIn( function () {
+                sortUpdateCorrect();
+            });
 
             var swid = $item.attr('id').split('_').pop();
             $('[name=studentwork_classify_' + swid +']').val(0);
             $('[name=submitbutton]').addClass('needs-save');
+            
         });
     }
 
@@ -232,7 +237,7 @@ window.onbeforeunload = function (e) {
 
 function sortShowCorrect() {
     
-    $('.sort-studentwork').each(function () {
+    $('.sort-category .sort-studentwork').each(function () {
        var cat_id = $(this).closest('.sort-category').attr('id').split('_').pop();
        if ($(this).attr('data-correct') == cat_id) {
            $(this).addClass('sort-is-correct');
@@ -244,4 +249,11 @@ function sortShowCorrect() {
 function sortHideCorrect() {
     $('.sort-is-correct').removeClass('sort-is-correct');
     $('.sort-is-not-correct').removeClass('sort-is-not-correct');
+}
+
+function sortUpdateCorrect() {
+    sortHideCorrect();
+    if ($('.sort-show-correct-link').hasClass('sort-show-correct-hide')) {
+        sortShowCorrect();
+    }
 }

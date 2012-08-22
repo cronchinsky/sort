@@ -531,9 +531,11 @@ height: 200px;
 }
 
 .sort-is-correct {
-    background:green;
+    background:#f8fff0;
+    border:1px solid #bbee77;
 }
 
 .sort-is-not-correct {
-    background:red;
+    background:#fef5f1;
+    border: 1px solid #ed541d;
 }
