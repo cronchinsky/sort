@@ -91,8 +91,13 @@
   // Get an array of swids for the student work here.
   $swids = array_keys($studentworks);
   $swids = array_combine($swids,$swids);
-
-
+  
+  // Check to see if there are any correct answers
+  $has_correct = 0;
+  foreach($studentworks as $studentwork) {
+    $has_correct += $studentwork->correct_answer;
+  }
+  
   // If there is student work associated with this problem, load any classifications
   // from this user for any of these swids.  Yay implode!
   if ($swids) {
@@ -216,7 +221,7 @@
           $image_url = $url_index[$studentwork->id];  
           $put_last_url = ($put_last == "") ? "problem.php?id=$id&amp;putLast=$studentwork->id" : "problem.php?id=$id&amp;putLast=$put_last,$studentwork->id";
 
-          $item = "<li id='studentwork_$studentwork->id' class='ui-widget-content ui-corner-tr sort-draggable sort-studentwork'>";
+          $item = "<li id='studentwork_$studentwork->id' class='ui-widget-content ui-corner-tr sort-draggable sort-studentwork' data-correct='$studentwork->correct_answer'>";
           $item .= '<h5 class="ui-widget-header">' . $studentwork->name . "</h5>";
           $item .= '<img src="' . $image_url . '" alt="' . addslashes($studentwork->name) . '" />';
           $item .= '<a href="' . $image_url . '" title="View larger image" class="ui-icon ui-icon-magnifying">View larger</a>';
@@ -280,9 +285,11 @@
   echo '<span class="sort-participant-results-box"><a id="participant" href="studentwork.php?pid=' . $problem->id . '" ' . /*onclick=\'' display_confirm("studentwork.php?pid=' . $problem->id . '","participant");return false;\'*/  '>Participant responses</a></span>';
   echo "<span class='sort-see-all-scores-link-box'><a id='allscores' href='allscores.php?sid=$sort->id&amp;pid=$problem->id' onclick='display_confirm(\"allscores.php?sid=$sort->id&amp;pid=$problem->id\",\"allscores\"); return false;'>My class chart</a></span>";
   echo '<span class="sort-back-link-box"><a id="sortmenu" href="view.php?s=' . $sort->id . '" onclick="display_confirm(\'view.php?s=' . $sort->id .'\', \'sortmenu\'); return false;">Sort menu</a></span>';
-
   if (has_capability('mod/sort:edit', $context)) {
   echo '<span class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage student work</a></span>';
+  }
+  if ($has_correct) {
+    echo '<span class="sort-show-correct"><a class="sort-show-correct-link sort-show-correct-show" href="#">Show Correct / Incorrect</a></span>';
   }
   echo "</div>";
 

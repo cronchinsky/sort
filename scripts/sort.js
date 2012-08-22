@@ -183,9 +183,26 @@ $(function() {
 
         return false;
     });
+    
     $('[name=submitbutton]').click(function () {
         $(this).removeClass('needs-save');
-    })
+    });
+    
+    $('.sort-show-correct-link').click(function () {
+       if($(this).hasClass('sort-show-correct-show')) {
+           sortShowCorrect();
+           $(this).addClass('sort-show-correct-hide')
+                  .removeClass('sort-show-correct-show')
+                  .text('Hide Correct / Incorrect');
+       }
+       else {
+           sortHideCorrect();
+           $(this).addClass('sort-show-correct-show')
+                  .removeClass('sort-show-correct-hide')
+                  .text('Show Correct / Incorrect');
+       }
+       return false;
+    });
 });
 
 //function display_confirm(url, linkID) {
@@ -211,4 +228,20 @@ window.onbeforeunload = function (e) {
         // For Safari
         return message;   
     }
+}
+
+function sortShowCorrect() {
+    
+    $('.sort-studentwork').each(function () {
+       var cat_id = $(this).closest('.sort-category').attr('id').split('_').pop();
+       if ($(this).attr('data-correct') == cat_id) {
+           $(this).addClass('sort-is-correct');
+       }
+       else $(this).addClass('sort-is-not-correct');
+    });
+}
+
+function sortHideCorrect() {
+    $('.sort-is-correct').removeClass('sort-is-correct');
+    $('.sort-is-not-correct').removeClass('sort-is-not-correct');
 }

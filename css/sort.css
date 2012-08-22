@@ -529,3 +529,11 @@ height: 200px;
     margin-bottom:20px;
     padding:10px;
 }
+
+.sort-is-correct {
+    background:green;
+}
+
+.sort-is-not-correct {
+    background:red;
+}

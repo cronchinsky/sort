@@ -89,7 +89,7 @@ if ($swid != 0) {
 
 
 // Load the form.
-$mform = new sort_new_studentwork_form("/mod/sort/editstuwork.php?pid=$pid&swid=$swid", array('studentworks' => $studentworks, 'this_studentwork' => $stuwork));
+$mform = new sort_new_studentwork_form("/mod/sort/editstuwork.php?pid=$pid&swid=$swid", array('studentworks' => $studentworks, 'this_studentwork' => $stuwork, 'sort' => $sort, 'problem' => $problem));
 
 // If the form was cancelled, redirect.
 if ($mform->is_cancelled()) {
@@ -117,12 +117,14 @@ else {
       // Save the new student work as a new record.
       $stuwork->pid = $pid;
       $stuwork->name = $results->studentworkname;
+      $stuwork->correct_answer = $results->correct_answer;
       $new_record = $DB->insert_record('sort_studentwork', $stuwork);
       file_save_draft_area_files($results->attachments, $context->id, 'mod_sort', 'studentwork', $new_record);
     }
     else {
       // We're updaing existing work.
       $stuwork->name = $results->studentworkname;
+      $stuwork->correct_answer = $results->correct_answer;
       $updated_record = $DB->update_record('sort_studentwork', $stuwork);
       file_save_draft_area_files($results->attachments, $context->id, 'mod_sort', 'studentwork', $stuwork->id);
     }
