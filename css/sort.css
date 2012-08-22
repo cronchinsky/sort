@@ -37,13 +37,18 @@
 .sort-drag-interface .fitem .felement {
 	margin-left: 0;
 	width: 100%;
+	text-align: center;
+}
+
+#page-mod-sort-problem .mform .fitem .fitemtitle {
+	 display: none; 
 }
 /* Top Gallery (id = sort-gallery) */
 
 #sort-gallery { 
 	 width: 100%;
 	 min-height: 300px;
-         position:relative;
+     position:relative;
 }
   
 
@@ -69,7 +74,7 @@
 
 
 #sort-gallery li a.ui-icon-magnifying {
-    right:50px;
+    right: 60px;
 }
 
 #sort-gallery li.sort-gallery-end-message {
@@ -140,7 +145,7 @@
   
   margin:20px .5%;
   width: 18%;
-  height:18em;
+  height:14em;
   border-width:1px;
   display: inline-block;
   vertical-align:bottom;
@@ -240,7 +245,7 @@ li.sort-pager-link-1:before {
 /* Student work View page */
 .sort-student-work-wrapper{
     margin-top:5px;
-    padding:5px 30px;
+    padding:15px 30px 5px 30px;
     border: 1px solid #d3d3d3;
     border-radius: 15px;
     text-align: left;
@@ -263,12 +268,26 @@ li.sort-pager-link-1:before {
 	margin-left: 0;
 	width: 100%;
 }
+.sort-work-sample-wrapper {
+	margin-top: 10px;
+}
 
 .sort-work-sample {
-	height: 200px;
+ 	height: 250px;
+    margin: 0 auto .4em auto;
+    overflow: auto;
+    text-align: center;
+    width: 80%;
+	/*
+height: 200px;
 	overflow: auto;
 	width: 100%;
 	text-align: center;
+*/
+}
+
+.sort-work-sample img {
+	width: 100%;
 }
 
 .sort-user-classification-wrapper,
@@ -368,7 +387,11 @@ li.sort-pager-link-1:before {
 
 }
 
-
+#page-mod-sort-problem #page-header,
+#page-mod-sort-studentwork #page-header,
+#page-mod-sort-allscores #page-header {
+	display: none;
+}
 
 .sort-problem-wrapper  {	
 	width: 80%;
@@ -436,15 +459,15 @@ li.sort-pager-link-1:before {
 
 
 .ui-widget-content .ui-icon.ui-icon-magnifying {
-    background-image: url(images/magnify.png);
-    width:32px;
-    height:32px;
+    background-image: url(images/magnify-48.png);
+    width:48px;
+    height:48px;
 }
 
 .ui-widget-content .ui-icon.ui-icon-next-arrow {
-    background-image: url(images/next-arrow.png);
-    width:32px;
-    height:32px;
+    background-image: url(images/next-arrow-48.png);
+    width:48px;
+    height:48px;
 }
 
 .sort-category .ui-widget-content .ui-icon.ui-icon-magnifying {
@@ -489,7 +512,7 @@ li.sort-pager-link-1:before {
 }
 
 .sort-examples-accordion-body img {
-    width:100%;
+    /*width:100%;*/
 }
 
 .sort-examples-accordion {

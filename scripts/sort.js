@@ -8,29 +8,43 @@ $(function() {
     $directionsBox = $('.sort-directions-box');
     $directionsBox.find('.sort-directions-content').hide();
     $directionsBox.find('legend').click(function () {
-       $this = $(this);
-       if ($this.find('.ui-icon').hasClass('ui-icon-triangle-1-e')) {
-           $this.find('.ui-icon').removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
-           $this.parent().find('.sort-directions-content').show(400);
-           $this.closest('.sort-directions-box').addClass('sort-directions-visible').animate({'padding':'15px'},400);
-       }
-       else {
-           $this.find('.ui-icon').removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
-           $this.parent().find('.sort-directions-content').hide(400);
-           $this.closest('.sort-directions-box').removeClass('sort-directions-visible').animate({'padding':0},400);
-       }
+        $this = $(this);
+        if ($this.find('.ui-icon').hasClass('ui-icon-triangle-1-e')) {
+            $this.find('.ui-icon').removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
+            $this.parent().find('.sort-directions-content').show(400);
+            $this.closest('.sort-directions-box').addClass('sort-directions-visible').animate({
+                'padding':'15px'
+            },400);
+        }
+        else {
+            $this.find('.ui-icon').removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
+            $this.parent().find('.sort-directions-content').hide(400);
+            $this.closest('.sort-directions-box').removeClass('sort-directions-visible').animate({
+                'padding':0
+            },400);
+        }
     });
     
     // Buttons that fade in when hovered.
-    $('.sort-studentwork a.ui-icon').css({'opacity':.7}).hover( function () {
-        $(this).stop(false,false).animate({'opacity':1},100);
+    $('.sort-studentwork a.ui-icon').css({
+        'opacity':.7
+    }).hover( function () {
+        $(this).stop(false,false).animate({
+            'opacity':1
+        },100);
     }, function () {
-        $(this).stop(false,false).animate({'opacity':.7},100);
+        $(this).stop(false,false).animate({
+            'opacity':.7
+        },100);
     });
     
     
     // Examples Accordion
-    $('#accordion').accordion({collapsible:true, active:false, autoHeight:false});
+    $('#accordion').accordion({
+        collapsible:true, 
+        active:false, 
+        autoHeight:false
+    });
     
     // there's the gallery and the categories
     var $gallery = $( "#sort-gallery" );
@@ -41,13 +55,16 @@ $(function() {
         cancel: "a.ui-icon", // clicking an icon won't initiate dragging
         revert: "invalid", // when not dropped, the item will revert back to its initial position
         containment: ".sort-drag-interface",
-        cursorAt: {left: 0, top: 0},
+        cursorAt: {
+            left: 0, 
+            top: 0
+        },
         helper: function () {
             $dragger = $(this).clone();
             $dragger.css({
-                        'width' : '48px',
-                        'height' : '3em'
-                    })
+                'width' : '48px',
+                'height' : '3em'
+            })
             .find('img').remove();
             
             $dragger.find('.ui-icon').remove();
@@ -91,6 +108,7 @@ $(function() {
         var swid = $item.attr('id').split('_').pop();
         var value = $category.attr('id').split('_').pop();
         $('[name=studentwork_classify_' + swid +']').val(value);
+        $('[name=submitbutton]').addClass('needs-save');
 
     }
 
@@ -106,6 +124,7 @@ $(function() {
 
             var swid = $item.attr('id').split('_').pop();
             $('[name=studentwork_classify_' + swid +']').val(0);
+            $('[name=submitbutton]').addClass('needs-save');
         });
     }
 
@@ -164,4 +183,32 @@ $(function() {
 
         return false;
     });
+    $('[name=submitbutton]').click(function () {
+        $(this).removeClass('needs-save');
+    })
 });
+
+//function display_confirm(url, linkID) {
+//
+//	var r=confirm("Did you save your work? Click cancel to return to the sort.");
+//	if (r==true) {
+//	  window.location.href = url;
+//	} else {
+//		document.getElementById(linkID).href="#";
+//	}
+//	return false;
+//}
+
+window.onbeforeunload = function (e) {
+    if ($('#id_submitbutton').hasClass('needs-save')) {
+        var message = "You haven't saved your work yet.  Click OK to navigate away from this page and lose any unsaved data.";
+        var e = e || window.event;
+        // For IE and Firefox
+        if (e) {
+            e.returnValue = message;
+        }
+
+        // For Safari
+        return message;   
+    }
+}

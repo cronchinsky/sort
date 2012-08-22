@@ -70,10 +70,11 @@ sort_set_display_type($sort);
 // Output starts here
 echo $OUTPUT->header();
 
-echo $OUTPUT->heading("My class chart for $sort->name");
+echo $OUTPUT->heading("My Class Chart for $sort->name");
 
 // Get categories from sort object. 
 $categories = sort_get_categories($sort->id, $context);
+$num_categories = sizeof($categories);
 
 // Loop through the problems and create an array of their ids
 $pids = array();
@@ -119,7 +120,7 @@ $table = "
 
 // Loop through the problems and an overall header for each one.
  foreach ($problems as $problem) {
-   $table .= "<th class='sort-left-border sort-right-border sort-table-problem-header' colspan='4'>$problem->name</th>";
+   $table .= "<th class='sort-left-border sort-right-border sort-table-problem-header' colspan='$num_categories'>$problem->name</th>";
  }
  $table .="</tr><tr> <td class='category'>Student Work</td>";  
  
@@ -132,7 +133,7 @@ $table = "
      if ($category_counter == 0) {
        $class = 'sort-left-border category';
      }
-     else if ($category_counter == sizeof($categories) - 1) {
+     else if ($category_counter == $num_categories - 1) {
        $class = 'sort-right-border category';
      }
      else {
@@ -175,8 +176,7 @@ echo $table;
 
 // Go back to the sort activity main page.
 echo "<div class='sort-action-links'>";
-echo "<span><a href='problem.php?id=$pid'>Back to the problem</a></span>";
-echo "<span><a href='view.php?s=$sid'>Sort index</a></span>";
+echo "<span><a href='problem.php?id=$pid'>Back to Sort</a></span>";
 echo "</div>";  
 
 // Finish the page

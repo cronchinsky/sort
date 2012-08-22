@@ -19,6 +19,16 @@ $context = get_context_instance(CONTEXT_MODULE, $cm->id);
 
 add_to_log($course->id, 'sort', 'managecategories', "managecategories.php?id={$cm->id}", $sort->name, $cm->id);
 
+
+
+/// Print the page header
+$PAGE->set_url('/mod/sort/view.php', array('id' => $cm->id));
+$PAGE->set_title(format_string($sort->name));
+$PAGE->set_heading(format_string($course->fullname));
+$PAGE->set_context($context);
+$PAGE->requires->css('/mod/sort/css/sort.css');
+sort_set_display_type($sort);
+
 $mform = new sort_category_form("managecategories.php?sid=$sid");
 
 //$DB = new moodle_database();
@@ -37,14 +47,6 @@ if ($results) {
 $categories = $DB->get_records('sort_category', array('sid' => $sid));
 
 
-
-/// Print the page header
-$PAGE->set_url('/mod/sort/view.php', array('id' => $cm->id));
-$PAGE->set_title(format_string($sort->name));
-$PAGE->set_heading(format_string($course->fullname));
-$PAGE->set_context($context);
-$PAGE->requires->css('/mod/sort/css/sort.css');
-sort_set_display_type($sort);
 
 echo $OUTPUT->header();
 echo "<h2>Manage Categories</h2>";
@@ -65,7 +67,7 @@ else {
 }
 if ($categories) {
   echo "<div class='sort-action-links'>";
-    echo "<span><a href='view.php?s=$sid'>Sort Index</a></span>";
+    echo "<span><a href='view.php?s=$sid'>Sort menu</a></span>";
   echo "</div>";
   
 } 

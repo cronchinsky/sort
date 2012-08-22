@@ -132,8 +132,127 @@ foreach($classifications as $classification) {
 }
 
 $score_totals = unserialize($problem->previous_data);
+
 $uids = array();
 $all_classifications = $DB->get_records('sort_classification', array('swid' => $swid));
+
+/* START: prefill code: TO REMOVE */
+$prefill = array(
+		15 => array(
+			1 => 10,
+			2 => 0,
+			3 => 0,
+			4 => 0,
+			5 => 0),
+		14 => array(
+			1 => 0,
+			2 => 10,
+			3 => 0,
+			4 => 0,
+			5 => 0
+		),
+		13 => array(
+			1 => 0,
+			2 => 10,
+			3 => 0,
+			4 => 0,
+			5 => 0
+		),
+		12 => array(
+			1 => 0,
+			2 => 0,
+			3 => 10,
+			4 => 0,
+			5 => 0
+		),
+		11 => array(
+			1 => 0,
+			2 => 0,
+			3 => 7,
+			4 => 0,
+			5 => 3
+		),
+		10 => array(
+			1 => 0,
+			2 => 0,
+			3 => 0,
+			4 => 9,
+			5 => 1
+		),
+		9 => array(
+			1 => 10,
+			2 => 0,
+			3 => 0,
+			4 => 0,
+			5 => 0
+		),
+		8 => array(
+			1 => 0,
+			2 => 4,
+			3 => 0,
+			4 => 0,
+			5 => 6
+		),
+		7 => array(
+			1 => 10,
+			2 => 0,
+			3 => 0,
+			4 => 0,
+			5 => 0
+		),
+		6 => array(
+			1 => 0,
+			2 => 0,
+			3 => 0,
+			4 => 10,
+			5 => 0
+		),
+		5 => array(
+			1 => 0,
+			2 => 0,
+			3 => 5,
+			4 => 0,
+			5 => 5
+		),
+		4 => array(
+			1 => 0,
+			2 => 0,
+			3 => 10,
+			4 => 0,
+			5 => 0
+		),
+		3 => array(
+			1 => 0,
+			2 => 0,
+			3 => 0,
+			4 => 8,
+			5 => 2
+		),
+		2 => array(
+			1 => 0,
+			2 => 0,
+			3 => 7,
+			4 => 0,
+			5 => 3
+		),
+		1 => array(
+			1 => 8,
+			2 => 2,
+			3 => 0,
+			4 => 0,
+			5 => 0
+		),
+
+	);
+
+/* END: prefill code TO REMOVE */
+ 
+
+for ($i = 1; $i <= 5; $i++) {
+    $score_totals[$i] = $prefill[$swid][$i];
+}
+
+
 foreach($all_classifications as $classification) {
   $score_totals[$classification->category] += 1;
   $uids[] = $classification->uid;
@@ -142,8 +261,7 @@ foreach($all_classifications as $classification) {
 $all_votes_total = array_sum($score_totals);
 
 foreach ($score_totals as $key=>$total) {
-  if ($key != 4) $percentages[$key] = round($total/$all_votes_total * 100);
-  else $percentages[4] = 100 - $percentages[1] - $percentages[2] - $percentages[3];
+   $percentages[$key] = round($total/$all_votes_total * 100);
 }
   
   
@@ -184,9 +302,12 @@ echo "</ul>";
 echo "</div>";
 echo "<div class='sort-student-work-wrapper'>";
 echo $OUTPUT->heading("Sample " . $this_studentwork->name);
+echo "<div class='sort-work-sample-wrapper'>";
 echo "<div class='sort-work-sample'>";
 echo "<img src='" . sort_get_image_file_url($image) . "' class='sort-work-sample-image' />";
 echo "</div>";
+echo "</div>";
+
 
 echo "<div class='sort-classification-wrapper'>";
 
@@ -235,7 +356,8 @@ foreach ($all_classifications as $classification) {
       $class .= ' sort-comment-first';
     }
     echo "<div class='$class'>";
-    echo "<div class='sort-comment-username'><strong>" . $users[$classification->uid]->username . "</strong> - <em>" . $categories[$classification->category]->category . "</em></div> ";
+    //echo "<div class='sort-comment-username'><strong>" . $users[$classification->uid]->username . "</strong> - <em>" . $categories[$classification->category]->category . "</em></div> ";
+    echo "<div class='sort-comment-username'><em>" . $categories[$classification->category]->category . "</em></div> ";
     echo "<div class='sort-comment-body'>" . format_text($classification->commenttext) . "</div>";
     echo "</div>";
   }
@@ -243,7 +365,7 @@ foreach ($all_classifications as $classification) {
 
 echo '</div>';
 echo "<div class='sort-action-links'>";
-echo '<span class="sort-back-problem-link-box"><a href="problem.php?id=' . $problem->id . '">Back to the problem</a></span>';
+echo '<span class="sort-back-problem-link-box"><a href="problem.php?id=' . $problem->id . '">Back to Sort</a></span>';
 echo "</div>";
 echo "</div>";
 

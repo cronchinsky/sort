@@ -49,6 +49,7 @@ defined('MOODLE_INTERNAL') || die();
 function sort_supports($feature) {
     switch($feature) {
         case FEATURE_MOD_INTRO:         return true;
+        case FEATURE_GRADE_HAS_GRADE:   return true;
         default:                        return null;
     }
 }
@@ -106,7 +107,7 @@ function sort_update_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
     $cmid = $sort->coursemodule;
         
     $context = get_context_instance(CONTEXT_MODULE, $cmid);
- 
+    sort_grade_item_update($sort);
 
     return true;
 
@@ -302,9 +303,24 @@ function sort_grade_item_update(stdClass $sort) {
     /** @example */
     $item = array();
     $item['itemname'] = clean_param($sort->name, PARAM_NOTAGS);
-    $item['gradetype'] = GRADE_TYPE_VALUE;
-    $item['grademax']  = $sort->grade;
-    $item['grademin']  = 0;
+
+    if ($assignment->grade > 0) {
+        $item['gradetype'] = GRADE_TYPE_VALUE;
+        $item['grademax']  = $sort->grade;
+        $item['grademin']  = 0;
+
+    } else if ($assignment->grade < 0) {
+        $item['gradetype'] = GRADE_TYPE_SCALE;
+        $item['scaleid']   = -$sort->grade;
+
+    } else {
+        $item['gradetype'] = GRADE_TYPE_TEXT; // allow text comments only
+    }
+
+    if ($grades  === 'reset') {
+        $item['reset'] = true;
+        $grades = NULL;
+    }
 
     grade_update('mod/sort', $sort->course, 'mod', 'sort', $sort->id, 0, null, $item);
 }
@@ -479,11 +495,11 @@ function sort_get_categories($sid, $context) {
     $categories[$key]->html = "";
   }
   return $categories;
-}
+ }
 
 /**
  * Debugger.
  */
-function etlo_debug($variables) {
+function sort_debug($variables) {
   echo "<pre>" . var_export($variables,TRUE) . "</pre>";
 } 

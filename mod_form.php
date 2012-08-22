@@ -110,7 +110,7 @@ class mod_sort_mod_form extends moodleform_mod {
         
 
 
-        
+        $this->standard_grading_coursemodule_elements();
         //-------------------------------------------------------------------------------
         // add standard elements, common to all modules
         $this->standard_coursemodule_elements();

@@ -84,6 +84,10 @@
   $studentworks = $DB->get_records('sort_studentwork', array('pid' => $problem->id));
 
   if ($studentworks) {
+  
+  // if SW gets enters A, B, C... then it is displayed ..C, B, A: so reverse for now.
+  $studentworks = array_reverse($studentworks, true);
+  
   // Get an array of swids for the student work here.
   $swids = array_keys($studentworks);
   $swids = array_combine($swids,$swids);
@@ -168,6 +172,7 @@
 
     // Output starts here
     echo $OUTPUT->header();
+    echo $OUTPUT->heading($sort->name);
 
 
 
@@ -187,27 +192,7 @@
     }
 
 
-      // Directions box 
-      echo "<fieldset class='sort-directions-box'>";
-      echo "<legend><span class='ui-icon ui-icon-triangle-1-e'></span><span class='sort-directions-text'>Directions and Examples</span></legend>";
-      echo "<div class='sort-directions-content'><p>Sort the student work into the different categories below.  You can click on the image of student work and drag it to one of the different categories.  </p><p class='ui-icon-magnifying'>Click the magnifying glass to enlarge the image.</p><p class='ui-icon-next-arrow'>Click the arrow to move to the next image to sort.</p><h4 id='save'>After you have finished sorting, be sure to click 'Save changes' to permanently save your work.</h4>";
-      echo "<div class='sort-examples-accordion'>";
-    echo "<p>Examples</p>";
-    echo '<div id="accordion">';
-
-    foreach ($categories as $key=>$category) {
-      if ($key != 0) {
-        echo "<h3>" . $category->category . "</h3>";
-        echo "<div class='sort-examples-accordion-body'>";
-        echo "<img src='" . sort_get_image_file_url($category->image) . "' />";
-        echo $category->exampletext;
-        echo "</div>";
-      }
-    }
-    echo '</div>';
-    echo '</div>';
-      echo '</div>';
-      echo "</fieldset>";
+  
 
       // Create a box for the drag and drop interface.
       echo '<div class="sort-drag-interface ui-widget ui-helper-clearfix">';
@@ -229,16 +214,17 @@
 
       foreach ($studentworks as $studentwork) {
           $image_url = $url_index[$studentwork->id];  
-          $put_last_url = ($put_last == "") ? "problem.php?id=$id&putLast=$studentwork->id" : "problem.php?id=$id&putLast=$put_last,$studentwork->id";
+          $put_last_url = ($put_last == "") ? "problem.php?id=$id&amp;putLast=$studentwork->id" : "problem.php?id=$id&amp;putLast=$put_last,$studentwork->id";
 
           $item = "<li id='studentwork_$studentwork->id' class='ui-widget-content ui-corner-tr sort-draggable sort-studentwork'>";
           $item .= '<h5 class="ui-widget-header">' . $studentwork->name . "</h5>";
-          $item .= '<img src="' . $image_url . '" alt="' . addslashes($studentwork->name) . '">';
+          $item .= '<img src="' . $image_url . '" alt="' . addslashes($studentwork->name) . '" />';
           $item .= '<a href="' . $image_url . '" title="View larger image" class="ui-icon ui-icon-magnifying">View larger</a>';
           $item .= '<a href="' . $put_last_url . '" title="Next Piece of Student Work" class="sort-next-button ui-icon ui-icon-next-arrow">Next Piece of Student Work</a>';
+       
           $item .= '<ul class="sort-actions-list">';
           foreach ($categories as $key => $category) {
-            $item .= "<li><a href='problem.php?id=$id&swid=$studentwork->id&cat=$key'>$category->category</a></li>";
+            $item .= "<li><a href='problem.php?id=$id&amp;swid=$studentwork->id&amp;cat=$key'>$category->category</a></li>";
           }
           $item .= '</ul>';
           $item .= '</li>';
@@ -266,6 +252,8 @@
         if ($key != 0) {
           echo "<div id='category_$key' class='sort-category ui-widget-content ui-state-default'>";
           echo "<h4 class='ui-widget-header'>$category->category</h4>";
+         
+          // validator doesn't like the empty <ul>'s..
           echo '<ul class="sort-gallery ui-helper-reset ui-helper-clearfix">';
           echo $category->html;
           echo '</ul>';
@@ -287,12 +275,11 @@
   }
 
 
-  // Begin action links at the bottom.
+ // Begin action links at the bottom.
   echo "<div class='sort-action-links'>";
-  echo '<span class="sort-participant-results-box"><a href="studentwork.php?pid=' . $problem->id . '">Participant responses</a></span>';
-  echo "<span class='sort-see-all-scores-link-box'><a href='allscores.php?sid=$sort->id&amp;pid=$problem->id'>My class chart</a></span>";
-  //echo '<span class="sort-view-scores-link-box"><a href="scores.php?pid=' . $problem->id . '">My class chart</a></span>';
-  echo '<span class="sort-back-link-box"><a href="view.php?s=' . $sort->id . '">Sort index</a></span>';
+  echo '<span class="sort-participant-results-box"><a id="participant" href="studentwork.php?pid=' . $problem->id . '" ' . /*onclick=\'' display_confirm("studentwork.php?pid=' . $problem->id . '","participant");return false;\'*/  '>Participant responses</a></span>';
+  echo "<span class='sort-see-all-scores-link-box'><a id='allscores' href='allscores.php?sid=$sort->id&amp;pid=$problem->id' onclick='display_confirm(\"allscores.php?sid=$sort->id&amp;pid=$problem->id\",\"allscores\"); return false;'>My class chart</a></span>";
+  echo '<span class="sort-back-link-box"><a id="sortmenu" href="view.php?s=' . $sort->id . '" onclick="display_confirm(\'view.php?s=' . $sort->id .'\', \'sortmenu\'); return false;">Sort menu</a></span>';
 
   if (has_capability('mod/sort:edit', $context)) {
   echo '<span class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage student work</a></span>';
@@ -301,5 +288,28 @@
 
 
   echo '</div>';
+      // Directions box 
+      echo "<fieldset class='sort-directions-box'>";
+      echo "<legend><span class='ui-icon ui-icon-triangle-1-e'></span><span class='sort-directions-text'>Directions and Examples</span></legend>";
+      echo "<div class='sort-directions-content'><p>Sort the student work into the different categories below.  You can click on the image of student work and drag it to one of the different categories. If you are unsure where to place the student's work and are not leaning towards one of the categories,it is ok to skip the piece and leaving it as unsorted. </p><p class='ui-icon-magnifying'>Click the magnifying glass to enlarge the image.</p><p class='ui-icon-next-arrow'>Click the arrow to move to the next image to sort.</p><h4 id='save'>After you have finished sorting, be sure to click 'Save changes' to permanently save your work.</h4>";
+      echo "<p>After saving your work, you can click on:</p>";
+      echo "<ul><li><em>Participant responses</em> to see how others sorted the work.</li><li><em>My class chart</em> to see a summary chart based on how you have sorted the student work into the categories.</li></ul>";
+      echo "<div class='sort-examples-accordion'>";
+    echo "<h3>Examples</h3>";
+    echo '<div id="accordion">';
+
+    foreach ($categories as $key=>$category) {
+      if ($key != 0) {
+        echo "<h3>" . $category->category . "</h3>";
+        echo "<div class='sort-examples-accordion-body'>";
+        echo "<p><img src='" . sort_get_image_file_url($category->image) . "' /></p>";
+        echo "<p>$category->exampletext</p>";
+        echo "</div>";
+      }
+    }
+    echo '</div>';
+    echo '</div>';
+      echo '</div>';
+      echo "</fieldset>";
   // Finish the page
   echo $OUTPUT->footer();
