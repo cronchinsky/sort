@@ -532,10 +532,10 @@ height: 200px;
 
 .sort-is-correct {
     background:#f8fff0;
-    border:1px solid #bbee77;
+    border:3px solid #bbee77;
 }
 
 .sort-is-not-correct {
     background:#fef5f1;
-    border: 1px solid #ed541d;
+    border: 3px solid #ed541d;
 }

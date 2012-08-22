@@ -239,7 +239,7 @@ function sortShowCorrect() {
     
     $('.sort-category .sort-studentwork').each(function () {
        var cat_id = $(this).closest('.sort-category').attr('id').split('_').pop();
-       if ($(this).attr('data-correct') == cat_id) {
+       if ($(this).attr('data-correct') == cat_id || $(this).attr('data-correct') == "0") {
            $(this).addClass('sort-is-correct');
        }
        else $(this).addClass('sort-is-not-correct');
