@@ -137,7 +137,7 @@ $uids = array();
 $all_classifications = $DB->get_records('sort_classification', array('swid' => $swid));
 
 /* START: prefill code: TO REMOVE */
-$prefill = array(
+/*$prefill = array(
 		15 => array(
 			1 => 10,
 			2 => 0,
@@ -244,14 +244,14 @@ $prefill = array(
 		),
 
 	);
-
+*/
 /* END: prefill code TO REMOVE */
  
-
+/*
 for ($i = 1; $i <= 5; $i++) {
     $score_totals[$i] = $prefill[$swid][$i];
 }
-
+*/
 
 foreach($all_classifications as $classification) {
   $score_totals[$classification->category] += 1;
@@ -319,6 +319,7 @@ echo "</div></div>";
 echo "<div class='sort-others-classification-wrapper'><div class='sort-others-classification'>";
 echo "<h3>How have others sorted the work?</h3>";
 echo "<table class='sort-others-table'>";
+
 foreach ($percentages as $cat_index => $precentage) {
   echo "<tr><td><em>" . $categories[$cat_index]->category . "</em></td><td>" . $precentage . "% (" . $score_totals[$cat_index] ." classifications)</td></tr>";
 }
