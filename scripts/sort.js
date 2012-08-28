@@ -79,6 +79,7 @@ $(function() {
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
             categorize( ui.draggable, $(this) );
+                    sortUpdateCorrect();
         }
     });
 
@@ -88,6 +89,7 @@ $(function() {
         activeClass: "custom-state-active",
         drop: function( event, ui ) {
             uncategorize( ui.draggable );
+                    sortUpdateCorrect();
         }
     });
 
@@ -103,13 +105,13 @@ $(function() {
                     width: "48px",
                     height: "3em"
                 });
+                sortUpdateCorrect();
             });
         });
         var swid = $item.attr('id').split('_').pop();
         var value = $category.attr('id').split('_').pop();
         $('[name=studentwork_classify_' + swid +']').val(value);
         $('[name=submitbutton]').addClass('needs-save');
-
     }
 
     // image uncategorize function
@@ -120,11 +122,14 @@ $(function() {
             .find( "img" )
             .end()
             .appendTo( $gallery )
-            .fadeIn();
+            .fadeIn( function () {
+                sortUpdateCorrect();
+            });
 
             var swid = $item.attr('id').split('_').pop();
             $('[name=studentwork_classify_' + swid +']').val(0);
             $('[name=submitbutton]').addClass('needs-save');
+            
         });
     }
 
@@ -183,21 +188,27 @@ $(function() {
 
         return false;
     });
+    
     $('[name=submitbutton]').click(function () {
         $(this).removeClass('needs-save');
-    })
+    });
+    
+    $('.sort-show-correct-link').click(function () {
+       if($(this).hasClass('sort-show-correct-show')) {
+           sortShowCorrect();
+           $(this).addClass('sort-show-correct-hide')
+                  .removeClass('sort-show-correct-show')
+                  .text('Hide Correct / Incorrect');
+       }
+       else {
+           sortHideCorrect();
+           $(this).addClass('sort-show-correct-show')
+                  .removeClass('sort-show-correct-hide')
+                  .text('Show Correct / Incorrect');
+       }
+       return false;
+    });
 });
-
-//function display_confirm(url, linkID) {
-//
-//	var r=confirm("Did you save your work? Click cancel to return to the sort.");
-//	if (r==true) {
-//	  window.location.href = url;
-//	} else {
-//		document.getElementById(linkID).href="#";
-//	}
-//	return false;
-//}
 
 window.onbeforeunload = function (e) {
     if ($('#id_submitbutton').hasClass('needs-save')) {
@@ -210,5 +221,28 @@ window.onbeforeunload = function (e) {
 
         // For Safari
         return message;   
+    }
+}
+
+function sortShowCorrect() {
+    
+    $('.sort-category .sort-studentwork').each(function () {
+       var cat_id = $(this).closest('.sort-category').attr('id').split('_').pop();
+       if ($(this).attr('data-correct') == cat_id || $(this).attr('data-correct') == "0") {
+           $(this).addClass('sort-is-correct');
+       }
+       else $(this).addClass('sort-is-not-correct');
+    });
+}
+
+function sortHideCorrect() {
+    $('.sort-is-correct').removeClass('sort-is-correct');
+    $('.sort-is-not-correct').removeClass('sort-is-not-correct');
+}
+
+function sortUpdateCorrect() {
+    sortHideCorrect();
+    if ($('.sort-show-correct-link').hasClass('sort-show-correct-hide')) {
+        sortShowCorrect();
     }
 }

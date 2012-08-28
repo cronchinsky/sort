@@ -59,6 +59,20 @@ function xmldb_sort_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2012082101, 'sort');
     }
 
-    
+        if ($oldversion < 2012082200) {
+
+        // Define field correct_answer to be added to sort_studentwork
+        $table = new xmldb_table('sort_studentwork');
+        $field = new xmldb_field('correct_answer', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, null, null, '0', 'name');
+
+        // Conditionally launch add field correct_answer
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // sort savepoint reached
+        upgrade_mod_savepoint(true, 2012082200, 'sort');
+    }
+
     return true;
 }
