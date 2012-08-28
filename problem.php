@@ -282,9 +282,9 @@
 
  // Begin action links at the bottom.
   echo "<div class='sort-action-links'>";
-  echo '<span class="sort-participant-results-box"><a id="participant" href="studentwork.php?pid=' . $problem->id . '" ' . /*onclick=\'' display_confirm("studentwork.php?pid=' . $problem->id . '","participant");return false;\'*/  '>Participant responses</a></span>';
-  echo "<span class='sort-see-all-scores-link-box'><a id='allscores' href='allscores.php?sid=$sort->id&amp;pid=$problem->id' onclick='display_confirm(\"allscores.php?sid=$sort->id&amp;pid=$problem->id\",\"allscores\"); return false;'>My class chart</a></span>";
-  echo '<span class="sort-back-link-box"><a id="sortmenu" href="view.php?s=' . $sort->id . '" onclick="display_confirm(\'view.php?s=' . $sort->id .'\', \'sortmenu\'); return false;">Sort menu</a></span>';
+  echo '<span class="sort-participant-results-box"><a id="participant" href="studentwork.php?pid=' . $problem->id . '">Participant responses</a></span>';
+  echo "<span class='sort-see-all-scores-link-box'><a id='allscores' href='allscores.php?sid=$sort->id&amp;pid=$problem->id'>My class chart</a></span>";
+  echo '<span class="sort-back-link-box"><a id="sortmenu" href="view.php?s=' . $sort->id . '">Sort menu</a></span>';
   if (has_capability('mod/sort:edit', $context)) {
   echo '<span class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage student work</a></span>';
   }
@@ -318,5 +318,6 @@
     echo '</div>';
       echo '</div>';
       echo "</fieldset>";
+      sort_add_attribution_line();
   // Finish the page
   echo $OUTPUT->footer();

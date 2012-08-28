@@ -210,17 +210,6 @@ $(function() {
     });
 });
 
-//function display_confirm(url, linkID) {
-//
-//	var r=confirm("Did you save your work? Click cancel to return to the sort.");
-//	if (r==true) {
-//	  window.location.href = url;
-//	} else {
-//		document.getElementById(linkID).href="#";
-//	}
-//	return false;
-//}
-
 window.onbeforeunload = function (e) {
     if ($('#id_submitbutton').hasClass('needs-save')) {
         var message = "You haven't saved your work yet.  Click OK to navigate away from this page and lose any unsaved data.";

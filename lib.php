@@ -74,8 +74,9 @@ function sort_add_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
     # You may have to add extra stuff in here #
     
     $new_id =  $DB->insert_record('sort', $sort, true);
-   
+    $sort->id = $new_id;
     $results = $mform->get_data();
+    sort_grade_item_update($sort);
     return $new_id;
    
 }
@@ -503,3 +504,9 @@ function sort_get_categories($sid, $context) {
 function sort_debug($variables) {
   echo "<pre>" . var_export($variables,TRUE) . "</pre>";
 } 
+
+function sort_add_attribution_line() {
+  echo "<div class='sort-attribution'>";
+  echo "The development of this activity was sponsored by <a href='http://www2.edc.org/accessmath/'>Addressing Accessibility in Mathematics</a>";
+  echo "</div>";
+}
