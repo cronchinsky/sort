@@ -66,7 +66,10 @@ class mod_sort_mod_form extends moodleform_mod {
 
         // Adding the standard "intro" and "introformat" fields
         $this->add_intro_editor();
-       
+        
+        
+        $mform->addElement('header','correct_answers_section','Correct/Incorrect Answers');
+                $mform->addElement('advcheckbox', 'has_correct', 'Correct Answers', 'This activity has correct / incorrect answers', NULL, array(0, 1));
     	//----------------------------------------------------------------------------------
  		 $mform->addElement('header', 'optionssection', 'Display options');
         
@@ -107,8 +110,6 @@ class mod_sort_mod_form extends moodleform_mod {
 
        
 		//------------------------------------------------------------------------------------------------
-        
-
 
         $this->standard_grading_coursemodule_elements();
         //-------------------------------------------------------------------------------

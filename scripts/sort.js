@@ -198,13 +198,15 @@ $(function() {
            sortShowCorrect();
            $(this).addClass('sort-show-correct-hide')
                   .removeClass('sort-show-correct-show')
-                  .text('Hide Correct / Incorrect');
+                  .text('Stop Checking Work');
+                      $('#correct-key').show(300);
        }
        else {
            sortHideCorrect();
            $(this).addClass('sort-show-correct-show')
                   .removeClass('sort-show-correct-hide')
-                  .text('Show Correct / Incorrect');
+                  .text('Check Work');
+                  $('#correct-key').hide(300);
        }
        return false;
     });
@@ -233,6 +235,8 @@ function sortShowCorrect() {
        }
        else $(this).addClass('sort-is-not-correct');
     });
+    
+    $('#correct-key').addClass('sort-is-correct').show(300);
 }
 
 function sortHideCorrect() {

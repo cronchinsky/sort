@@ -73,6 +73,23 @@ function xmldb_sort_upgrade($oldversion) {
         // sort savepoint reached
         upgrade_mod_savepoint(true, 2012082200, 'sort');
     }
+    
+    
+        if ($oldversion < 2012091800) {
+
+        // Define field has_correct to be added to sort
+        $table = new xmldb_table('sort');
+        $field = new xmldb_field('has_correct', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, null, null, '0', 'grade');
+
+        // Conditionally launch add field has_correct
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // sort savepoint reached
+        upgrade_mod_savepoint(true, 2012091800, 'sort');
+    }
+
 
     return true;
 }

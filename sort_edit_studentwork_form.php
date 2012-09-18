@@ -18,7 +18,6 @@ class sort_new_studentwork_form extends moodleform {
         $options = array_combine($letters,$letters);
         
         foreach ($studentworks as $studentwork) {
-          echo (isset($this_studentwork)) ? "GO" : "NO";
           if (isset($options[$studentwork->name]) && (isset($this_studentwork) && $this_studentwork->name != $studentwork->name) || !isset($this_studentwork)) {
               unset($options[$studentwork->name]);
           }
@@ -42,8 +41,8 @@ class sort_new_studentwork_form extends moodleform {
           $options[$id] = $category->category;
         }
         
-        $mform->addElement('select','correct_answer','Correct Answer', $options);
-        
+        if ($sort->has_correct) $mform->addElement('select','correct_answer','Correct Answer', $options);
+        else $mform->addElement('hidden','correct_answer','0');
         $this->add_action_buttons(false);
     }                           
 }                               

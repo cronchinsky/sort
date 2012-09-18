@@ -93,10 +93,7 @@
   $swids = array_combine($swids,$swids);
   
   // Check to see if there are any correct answers
-  $has_correct = 0;
-  foreach($studentworks as $studentwork) {
-    $has_correct += $studentwork->correct_answer;
-  }
+  $has_correct = $sort->has_correct;
   
   // If there is student work associated with this problem, load any classifications
   // from this user for any of these swids.  Yay implode!
@@ -266,6 +263,7 @@
         }
       }
       // Display the hidden form and its submit buttons.
+      echo "<div id='correct-key' style='display:none'>Green Highlighting = Correct</div>";
       $mform->display();
       echo '</div>';
 
@@ -282,14 +280,14 @@
 
  // Begin action links at the bottom.
   echo "<div class='sort-action-links'>";
-  echo '<span class="sort-participant-results-box"><a id="participant" href="studentwork.php?pid=' . $problem->id . '">Participant responses</a></span>';
-  echo "<span class='sort-see-all-scores-link-box'><a id='allscores' href='allscores.php?sid=$sort->id&amp;pid=$problem->id'>My class chart</a></span>";
+  if ($has_correct) echo '<span class="sort-participant-results-box"><a id="participant" href="studentwork.php?pid=' . $problem->id . '">Participant responses</a></span>';
+  if ($has_correct) echo "<span class='sort-see-all-scores-link-box'><a id='allscores' href='allscores.php?sid=$sort->id&amp;pid=$problem->id'>My class chart</a></span>";
   echo '<span class="sort-back-link-box"><a id="sortmenu" href="view.php?s=' . $sort->id . '">Sort menu</a></span>';
   if (has_capability('mod/sort:edit', $context)) {
   echo '<span class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage student work</a></span>';
   }
   if ($has_correct) {
-    echo '<span class="sort-show-correct"><a class="sort-show-correct-link sort-show-correct-show" href="#">Show Correct / Incorrect</a></span>';
+    echo '<span class="sort-show-correct"><a class="sort-show-correct-link sort-show-correct-show" href="#">Check Work</a></span>';
   }
   echo "</div>";
 
