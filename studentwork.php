@@ -308,7 +308,7 @@ echo "<h3>How have others sorted the work?</h3>";
 echo "<table class='sort-others-table'>";
 
 foreach ($percentages as $cat_index => $precentage) {
-  echo "<tr><td><em>" . $categories[$cat_index]->category . " $cate_index</em></td><td>" . $precentage . "% (" . $score_totals[$cat_index] ." classifications)</td></tr>";
+  echo "<tr><td><em>" . $categories[$cat_index]->category . " $cat_index</em></td><td>" . $precentage . "% (" . $score_totals[$cat_index] ." classifications)</td></tr>";
 }
 echo "</table>";
 echo "</div></div>";
