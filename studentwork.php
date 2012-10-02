@@ -138,91 +138,91 @@ $all_classifications = $DB->get_records('sort_classification', array('swid' => $
 
 /* START: prefill code: TO REMOVE */
 $prefill = array(
-		15 => array(
+		84 => array(
 			1 => 0,
 			2 => 7,
 			3 => 0,
 			4 => 3,
     ),
-		14 => array(
+		83 => array(
 			1 => 9,
 			2 => 0,
 			3 => 0,
 			4 => 1,
 		),
-		13 => array(
+		82 => array(
 			1 => 0,
 			2 => 0,
 			3 => 10,
 			4 => 0,
 		),
-		12 => array(
+		81 => array(
 			1 => 10,
 			2 => 0,
 			3 => 0,
 			4 => 0,
 		),
-		11 => array(
+		80 => array(
 			1 => 0,
 			2 => 0,
 			3 => 8,
 			4 => 2,
 		),
-		10 => array(
+		79 => array(
 			1 => 0,
 			2 => 10,
 			3 => 0,
 			4 => 0,
 		),
-		9 => array(
+		78 => array(
 			1 => 0,
 			2 => 8,
 			3 => 0,
 			4 => 2,
 		),
-		8 => array(
+		77 => array(
 			1 => 0,
 			2 => 0,
 			3 => 10,
 			4 => 0,
 		),
-		7 => array(
+		76 => array(
 			1 => 10,
 			2 => 0,
 			3 => 10,
 			4 => 0,
 		),
-		6 => array(
+		75 => array(
 			1 => 10,
 			2 => 0,
 			3 => 0,
 			4 => 0,
 		),
-		5 => array(
+		74 => array(
 			1 => 0,
 			2 => 0,
 			3 => 8,
 			4 => 2,
 		),
-		4 => array(
+		73 => array(
 			1 => 8,
 			2 => 0,
 			3 => 0,
 			4 => 2,
 		),
-		3 => array(
+		72 => array(
 			1 => 6,
 			2 => 0,
 			3 => 2,
 			4 => 2,
 		),
-		2 => array(
+		71 => array(
 			1 => 0,
 			2 => 7,
 			3 => 0,
 			4 => 3,
 		),
-		1 => array(
+		70 => array(
 			1 => 0,
 			2 => 0,
 			3 => 10,
