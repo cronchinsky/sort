@@ -137,7 +137,7 @@ $uids = array();
 $all_classifications = $DB->get_records('sort_classification', array('swid' => $swid));
 
 /* START: prefill code: TO REMOVE */
-/*$prefill = array(
+$prefill = array(
 		15 => array(
 			1 => 10,
 			2 => 0,
@@ -244,14 +244,14 @@ $all_classifications = $DB->get_records('sort_classification', array('swid' => $
 		),
 
 	);
-*/
+
 /* END: prefill code TO REMOVE */
  
-/*
+
 for ($i = 1; $i <= 5; $i++) {
     $score_totals[$i] = $prefill[$swid][$i];
 }
-*/
+
 
 foreach($all_classifications as $classification) {
   $score_totals[$classification->category] += 1;
