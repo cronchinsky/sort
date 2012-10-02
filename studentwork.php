@@ -332,7 +332,7 @@ echo "<option value='0'>- All -</option>";
 foreach ($categories as $cat_id => $category)  {
   echo "<option value='$cat_id'>$category->category</option>";
 }
-  
+  sort_debug($categories);
 echo "</select></div>
 ";
 $first = true;
