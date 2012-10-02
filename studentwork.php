@@ -344,7 +344,7 @@ foreach ($all_classifications as $classification) {
     }
     echo "<div class='$class'>";
     //echo "<div class='sort-comment-username'><strong>" . $users[$classification->uid]->username . "</strong> - <em>" . $categories[$classification->category]->category . "</em></div> ";
-    echo "<div class='sort-comment-username'><em>" . $categories[$classification->category]->category . "</em></div> ";
+    echo "<div class='sort-comment-username'><em>" . $categories[$classification->category]->category . "</em>" . $classification->category ."</div> ";
     echo "<div class='sort-comment-body'>" . format_text($classification->commenttext) . "</div>";
     echo "</div>";
   }
