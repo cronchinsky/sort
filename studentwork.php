@@ -234,7 +234,7 @@ $prefill = array(
 /* END: prefill code TO REMOVE */
  
 if ($pid == 6) {
-  for ($i = 11; $i <= 14; $i++) {
+  for ($i = 7; $i <= 10; $i++) {
       $score_totals[$i] = $prefill[$swid][$i];
   }
 }
