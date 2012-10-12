@@ -32,7 +32,7 @@ $confirm = optional_param('confirm', 0, PARAM_INT); // student work ID
 // Get the stuwork from the swid
 $stuwork = $DB->get_record('sort_studentwork', array('id' => $swid));
 if (!$stuwork) {
-  print_error('That student work does not exist.  It cannot be deleted');
+  print_error('That ' . get_string('samplename','sort') . ' does not exist.  It cannot be deleted');
 }
 
 // Get the sort activity, course, etc from the stuwork.
@@ -64,7 +64,7 @@ if ($confirm && $swid) {
 
 // Set the page header.
 $PAGE->set_url('/mod/sort/deletestuwork.php', array('swid' => $swid));
-$PAGE->set_title(format_string("Editing student work."));
+$PAGE->set_title(format_string("Editing " . get_string("samplename","sort")));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->add_body_class('sort-stuwork-edit-form');
@@ -79,7 +79,7 @@ echo $OUTPUT->header();
 
 
 
-echo $OUTPUT->confirm("Are you sure you want to delete student work $stuwork->name from $problem->name?  Any participant classifications and explanations will be lost.","deletestuwork.php?swid=$swid&confirm=1","editstuwork.php?pid=$problem->id&swid=$swid");
+echo $OUTPUT->confirm("Are you sure you want to delete " . get_string("samplename","sort") . " $stuwork->name from $problem->name?  Any participant classifications and explanations will be lost.","deletestuwork.php?swid=$swid&confirm=1","editstuwork.php?pid=$problem->id&swid=$swid");
 
 echo $OUTPUT->footer();
 

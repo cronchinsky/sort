@@ -87,7 +87,7 @@ foreach($studentworks as $studentwork) {
   else $where .= "OR swid = $studentwork->id ";
 }
 
-if ($where == "") print_error('No student work found for this problem!');
+if ($where == "") print_error('No ' . get_string('samplename','sort') . ' found for this problem!');
 
 $where .= " AND uid = $USER->id";
 

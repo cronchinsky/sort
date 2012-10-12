@@ -13,7 +13,7 @@ class sort_new_studentwork_form extends moodleform {
         $mform->addElement('text', 'studentworkname', 'Name');
         $mform->addRule('studentworkname', 'This field is required', 'required');
         
-        $mform->addElement('filemanager', 'attachments', 'Student work image', null,
+        $mform->addElement('filemanager', 'attachments', 'sample image', null,
                     array('subdirs' => 0, 'maxbytes' => 33554432, 'maxfiles' => 1,
                           ));
         $mform->addRule('attachments', 'This field is required', 'required');
