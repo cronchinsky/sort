@@ -81,7 +81,7 @@ echo $OUTPUT->header();
 
 
 
-echo $OUTPUT->confirm("Are you sure you want to delete $problem->name?  Any " . get_string('samplename','sort') . " and participant classificatinos will be lost.","deleteproblem.php?pid=$pid&confirm=1","view.php?s=$sort->id");
+echo $OUTPUT->confirm("Are you sure you want to delete $problem->name?  Any " . get_string('samplename_plural','sort') . " and participant classificatinos will be lost.","deleteproblem.php?pid=$pid&confirm=1","view.php?s=$sort->id");
 
 echo $OUTPUT->footer();
 

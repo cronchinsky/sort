@@ -81,7 +81,7 @@ if ($swid != 0) {
   $stuwork = $DB->get_record('sort_studentwork', array('id' => $swid));
   // If there is no student work, the swid is funky.
   if (!$stuwork) {
-    print_error('Can not find any ' . get_string('samplename','sort'));
+    print_error('Can not find any ' . get_string('samplename_plural','sort'));
   }
   // This helps with the form.  studentworkname is the form element's name
   $stuwork->studentworkname = $stuwork->name;
@@ -135,12 +135,12 @@ else {
 
 // Begin page output
 echo $OUTPUT->header();
-echo $OUTPUT->heading("Manage " . get_string("samplename_caps",'sort') . " for {$problem->name}");
+echo $OUTPUT->heading("Manage " . get_string("samplename_caps_plural",'sort') . " for {$problem->name}");
 
 echo "<div class='sort-student-work-wrapper'>";
 
 echo "<div class='sort-student-work-pager'>";
-echo "<h4>Select a piece of " . get_string('samplename_caps','sort') . " to edit,<br /> or click \"Add New\" to create a new piece of " . get_string('samplename_caps','sort') . " to sort.</h4>";
+echo "<h4>Select " . get_string('samplename','sort') . " to edit,<br /> or click \"Add New\" to create a new " . get_string('samplename','sort') . " to sort.</h4>";
 echo "<ul>";
 foreach ($studentworks as $studentwork) {
   $class = ($swid == $studentwork->id) ? "class=\"sort-pager-current\"" : ""; 
@@ -154,7 +154,7 @@ echo "</div>";
 echo "<div class='sort-manage-form-wrapper'>";
 if ($swid) echo "<p class='sort-delete-link'><a href='deletestuwork.php?swid=$swid'>Delete this sample</a></p>";
 if ($swid) echo "<h4>Editing $stuwork->name</h4>";
-else echo "<h4>Adding New " . get_string('samplename','sort') . "</h4>";
+else echo "<h4>Adding New " . get_string('samplename_caps','sort') . "</h4>";
 
 //displays the form
 $mform->display();

@@ -58,11 +58,11 @@ $swids.=")";
 
 if (optional_param('pid', 0, PARAM_INT)) {
   if ($swids == ")") {
-    print_error("No " . get_string("samplename","sort") . " has been created yet!");
+    print_error("No " . get_string("samplename_plural","sort") . " have been created yet!");
   }
   $user_classification = $DB->get_record_select('sort_classification', "uid = $USER->id AND swid IN $swids ",array(),'*',IGNORE_MULTIPLE);
   if (!$user_classification) {
-    redirect("problem.php?id=$pid","You need to sort some" . get_string("samplename","sort") . " before you can examine these results");
+    redirect("problem.php?id=$pid","You need to sort some " . get_string("samplename_plural","sort") . " before you can examine these results");
   }
   $this_studentwork = $studentworks[$user_classification->swid];
   $swid = $this_studentwork->id;
@@ -119,7 +119,7 @@ $image = $DB->get_record_select('files', "filesize <> 0 AND component = 'mod_sor
 
 $this_classification = $DB->get_record('sort_classification', array('swid' => $swid, 'uid' => $USER->id));
 if (!$this_classification) {
-  print_error('You haven\'t sorted this piece of ' . get_string("samplename","sort") . ' yet!');
+  print_error('You haven\'t sorted this ' . get_string("samplename","sort") . ' yet!');
 }
 
 $mform = new sort_comment_form("studentwork.php?id=$swid", array('classification' => $this_classification));

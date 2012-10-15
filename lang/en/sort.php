@@ -44,3 +44,5 @@ $string['sortcategoriesalreadypicked'] = 'You have already selected your 4 categ
 $string['problemname'] = "Problem Name";
 $string['samplename_caps'] = "Student Work";
 $string['samplename'] = "student work";
+$string['samplename_plural'] = "student work samples";
+$string['samplename_caps_plural'] = "student work samples";

@@ -93,7 +93,7 @@ foreach($studentworks as $studentwork) {
   if ($where == "") $where .= "swid = $studentwork->id ";
   else $where .= "OR swid = $studentwork->id ";
 }
-if ($where == "") print_error('No ' . get_string('samplename','sort') . ' found for this problem!');
+if ($where == "") print_error('No ' . get_string('samplename_plural','sort') . ' found for this problem!');
 $where = "(" . $where . ")";
 $where .= " AND uid = $USER->id";
 $classifications = $DB->get_records_select('sort_classification',$where);
