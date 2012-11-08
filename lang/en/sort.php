@@ -42,3 +42,7 @@ $string['pluginname'] = 'sort';
 $string['sortcategorylabel'] = 'Enter the 4 categories that student work can be classified as.';
 $string['sortcategoriesalreadypicked'] = 'You have already selected your 4 categories.  These cannot be changed.';
 $string['problemname'] = "Problem Name";
+$string['samplename_caps'] = "Student Work";
+$string['samplename'] = "student work";
+$string['samplename_plural'] = "student work samples";
+$string['samplename_caps_plural'] = "student work samples";
