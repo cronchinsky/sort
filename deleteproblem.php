@@ -68,7 +68,7 @@ if ($confirm && $pid) {
 
 // Set the page header.
 $PAGE->set_url('/mod/sort/editstuwork.php', array('pid' => $pid, 'swid' => $swid));
-$PAGE->set_title(format_string("Editing student work."));
+$PAGE->set_title(format_string("Editing " . get_string('samplename','sort') . "."));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->add_body_class('sort-stuwork-edit-form');
@@ -81,7 +81,7 @@ echo $OUTPUT->header();
 
 
 
-echo $OUTPUT->confirm("Are you sure you want to delete $problem->name?  Any student work and participant classificatinos will be lost.","deleteproblem.php?pid=$pid&confirm=1","view.php?s=$sort->id");
+echo $OUTPUT->confirm("Are you sure you want to delete $problem->name?  Any " . get_string('samplename_plural','sort') . " and participant classificatinos will be lost.","deleteproblem.php?pid=$pid&confirm=1","view.php?s=$sort->id");
 
 echo $OUTPUT->footer();
 

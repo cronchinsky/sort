@@ -93,7 +93,7 @@ foreach($studentworks as $studentwork) {
   if ($where == "") $where .= "swid = $studentwork->id ";
   else $where .= "OR swid = $studentwork->id ";
 }
-if ($where == "") print_error('No student work found for this problem!');
+if ($where == "") print_error('No ' . get_string('samplename_plural','sort') . ' found for this problem!');
 $where = "(" . $where . ")";
 $where .= " AND uid = $USER->id";
 $classifications = $DB->get_records_select('sort_classification',$where);
@@ -122,7 +122,7 @@ $table = "
  foreach ($problems as $problem) {
    $table .= "<th class='sort-left-border sort-right-border sort-table-problem-header' colspan='$num_categories'>$problem->name</th>";
  }
- $table .="</tr><tr> <td class='category'>Student Work</td>";  
+ $table .="</tr><tr> <td class='category'>" . get_string('samplename_caps','sort') . "</td>";  
  
  // Loop through the problems again and make a 2nd header row with the categories
  // for each one.
@@ -153,7 +153,7 @@ sort($sw_names);
 foreach ($sw_names as $name) {
   $table .= "<tr>";
   $table .= "<td>$name</td>";
-  foreach ($problems as $problem) {
+  foreach ($problems as $problpem) {
     $category_counter = 0;
     foreach ($categories as $category) {
       $class = "";

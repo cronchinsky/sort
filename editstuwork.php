@@ -59,7 +59,7 @@ require_capability('mod/sort:edit', $context);
 
 // Set the page header. Needs to happen before the form code in order to stick, but I'm not sure why - CR
 $PAGE->set_url('/mod/sort/editstuwork.php', array('pid' => $pid, 'swid' => $swid));
-$PAGE->set_title(format_string("Editing student work."));
+$PAGE->set_title(format_string("Editing " . get_string("samplename","sort")));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 $PAGE->add_body_class('sort-stuwork-edit-form');
@@ -81,7 +81,7 @@ if ($swid != 0) {
   $stuwork = $DB->get_record('sort_studentwork', array('id' => $swid));
   // If there is no student work, the swid is funky.
   if (!$stuwork) {
-    print_error('Can not find any student work');
+    print_error('Can not find any ' . get_string('samplename_plural','sort'));
   }
   // This helps with the form.  studentworkname is the form element's name
   $stuwork->studentworkname = $stuwork->name;
@@ -135,12 +135,12 @@ else {
 
 // Begin page output
 echo $OUTPUT->header();
-echo $OUTPUT->heading("Manage Student Work for {$problem->name}");
+echo $OUTPUT->heading("Manage " . get_string("samplename_caps_plural",'sort') . " for {$problem->name}");
 
 echo "<div class='sort-student-work-wrapper'>";
 
 echo "<div class='sort-student-work-pager'>";
-echo "<h4>Select a piece of student work to edit,<br /> or click \"Add New\" to create a new piece of student work to sort.</h4>";
+echo "<h4>Select " . get_string('samplename','sort') . " to edit,<br /> or click \"Add New\" to create a new " . get_string('samplename','sort') . " to sort.</h4>";
 echo "<ul>";
 foreach ($studentworks as $studentwork) {
   $class = ($swid == $studentwork->id) ? "class=\"sort-pager-current\"" : ""; 
@@ -154,7 +154,7 @@ echo "</div>";
 echo "<div class='sort-manage-form-wrapper'>";
 if ($swid) echo "<p class='sort-delete-link'><a href='deletestuwork.php?swid=$swid'>Delete this sample</a></p>";
 if ($swid) echo "<h4>Editing $stuwork->name</h4>";
-else echo "<h4>Adding New Student Work</h4>";
+else echo "<h4>Adding New " . get_string('samplename_caps','sort') . "</h4>";
 
 //displays the form
 $mform->display();
