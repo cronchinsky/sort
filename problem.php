@@ -209,7 +209,7 @@
       // Create a ul that serves as the 'gallery' or sortable items.  Add the li
       // In propper form for jquery ui for each student work.
       echo '<ul id="sort-gallery" class="sort-gallery ui-helper-reset ui-helper-clearfix">';
-      echo "<li class='sort-gallery-end-message'><p>No " . get_string('samplename_caps','sort') . " to Classify</p></li>";
+      echo "<li class='sort-gallery-end-message'><p>No More Student Work to Classify</p></li>";
       $gallery ="";
       $last_items = array();
       $put_last_swids = explode(',',$put_last);
@@ -222,7 +222,7 @@
           $item .= '<h5 class="ui-widget-header">' . $studentwork->name . "</h5>";
           $item .= '<img src="' . $image_url . '" alt="' . addslashes($studentwork->name) . '" />';
           $item .= '<a href="' . $image_url . '" title="View larger image" class="ui-icon ui-icon-magnifying">View larger</a>';
-          $item .= '<a href="' . $put_last_url . '" title="Next ' . get_string('samplename','sort') . '" class="sort-next-button ui-icon ui-icon-next-arrow">Next ' . get_string('samplename_caps','sort') . '</a>';
+          $item .= '<a href="' . $put_last_url . '" title="Next Piece of Student Work" class="sort-next-button ui-icon ui-icon-next-arrow">Next Piece of Student Work</a>';
        
           $item .= '<ul class="sort-actions-list">';
           foreach ($categories as $key => $category) {
@@ -274,7 +274,7 @@
     // Output starts here
     echo $OUTPUT->header();
     // If there's no student work tied to this problem, the teachers should add some.
-    echo "<div class='sort-no-work-wrapper'><h2>No " . get_string('samplename_caps_plural','sort') . "!  Add some!</h2>";
+    echo "<div class='sort-no-work-wrapper'><h2>No Student Work!  Add some!</h2>";
   }
 
 
@@ -284,34 +284,13 @@
   if (empty($has_correct)) echo "<span class='sort-see-all-scores-link-box'><a id='allscores' href='allscores.php?sid=$sort->id&amp;pid=$problem->id'>My class chart</a></span>";
   echo '<span class="sort-back-link-box"><a id="sortmenu" href="view.php?s=' . $sort->id . '">Sort menu</a></span>';
   if (has_capability('mod/sort:edit', $context)) {
-  echo '<span class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage ' . get_string('samplename_plural','sort') . '</a></span>';
+  echo '<span class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage student work</a></span>';
   }
   if (!empty($has_correct)) {
     echo '<span class="sort-show-correct"><a class="sort-show-correct-link sort-show-correct-show" href="#">Check Work</a></span>';
   }
   echo "</div>";
 
-
-  echo '</div>';
-      // Directions box 
-      echo "<fieldset class='sort-directions-box'>";
-      echo "<legend><span class='ui-icon ui-icon-triangle-1-e'></span><span class='sort-directions-text'>Directions and Examples</span></legend>";
-      echo "<div class='sort-directions-content'><p>Sort the " . get_string("samplename_plural","sort") . " into the different categories below.  You can click on the image of the " . get_string('samplename','sort') . " and drag it to one of the different categories. If you are unsure where to place the " . get_string('samplename','sort') . " and are not leaning towards one of the categories,it is ok to skip the piece and leaving it as unsorted. </p><p class='ui-icon-magnifying'>Click the magnifying glass to enlarge the image.</p><p class='ui-icon-next-arrow'>Click the arrow to move to the next image to sort.</p><h4 id='save'>After you have finished sorting, be sure to click 'Save changes' to permanently save your work.</h4>";
-      echo "<p>After saving your work, you can click on:</p>";
-      echo "<ul><li><em>Participant responses</em> to see how others sorted the work.</li><li><em>My class chart</em> to see a summary chart based on how you have sorted the " . get_string('samplename_plural','sort') . " into the categories.</li></ul>";
-      echo "<div class='sort-examples-accordion'>";
-    echo "<h3>Examples</h3>";
-    echo '<div id="accordion">';
-
-    foreach ($categories as $key=>$category) {
-      if ($key != 0) {
-        echo "<h3>" . $category->category . "</h3>";
-        echo "<div class='sort-examples-accordion-body'>";
-        echo "<p><img src='" . sort_get_image_file_url($category->image) . "' /></p>";
-        echo "<p>$category->exampletext</p>";
-        echo "</div>";
-      }
-    }
     echo '</div>';
 
     if (empty($has_correct)) {
@@ -338,7 +317,7 @@
 	    echo '</div>';
 	      echo '</div>';
 	      echo "</fieldset>";
-	  } else {
+	  	} else {
 		   // Directions box for checked sort
 		   echo "<fieldset class='sort-directions-box'>";
 		   echo "<legend><span class='ui-icon ui-icon-triangle-1-e'></span><span class='sort-directions-text'>Directions</span></legend>";
