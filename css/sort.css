@@ -136,7 +136,7 @@
 }
 
 .sort-gallery li img {
-  width: 100%;
+  /* width: 100%; */
   cursor: move;
 }
 
