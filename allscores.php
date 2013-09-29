@@ -146,14 +146,13 @@ $table = "
  }
  $table .="</tr>";
  
- 
  // Sort the student work names to make them appear in alphabetical order.
  // Loop through the names and fill in the rows for each student work name.
 sort($sw_names);
 foreach ($sw_names as $name) {
   $table .= "<tr>";
   $table .= "<td>$name</td>";
-  foreach ($problems as $problpem) {
+  foreach ($problems as $problem) {
     $category_counter = 0;
     foreach ($categories as $category) {
       $class = "";
