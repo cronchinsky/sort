@@ -140,6 +140,10 @@
   cursor: move;
 }
 
+.moodle-26-etlo-org .sort-gallery li img {
+  width: 100%;
+}
+
 
 .sort-category {
   
