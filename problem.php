@@ -100,10 +100,12 @@
   if ($swids) {
     $classifications = $DB->get_records_select('sort_classification', "uid = $USER->id AND swid IN (" . implode(",", $swids) . ") ");
   }
+  //sort_debug($classifications);
 
   $classifications_indexed = array();
   foreach ($classifications as $classification) {
     $studentworks[$classification->swid]->category = $classification->category;
+    $studentworks[$classification->swid]->commenttext = $classification->commenttext;
     $classifications_indexed[$classification->swid] = $classification;
   }
   }
@@ -147,6 +149,7 @@
         unset($classification);
         $classification->category = $form_results['studentwork_classify_' . $swid];
         $classification->swid = $swid;
+        $classification->commenttext = $form_results['studentwork_comment_' . $swid];
         $classification->uid = $USER->id;
 
         // If this is set, there was previous data.
@@ -220,6 +223,8 @@
 
           $item = "<li id='studentwork_$studentwork->id' class='ui-widget-content ui-corner-tr sort-draggable sort-studentwork' data-correct='$studentwork->correct_answer'>";
           $item .= '<h5 class="ui-widget-header">' . $studentwork->name . "</h5>";
+          $item .= "<label>My Explanation: </label><input type='text' id='comment_$studentwork->id' value='$studentwork->commenttext' />";
+          $item .= "<p>Please explain your sorting choice</p>";
           $item .= '<img src="' . $image_url . '" alt="' . addslashes($studentwork->name) . '" />';
           $item .= '<a href="' . $image_url . '" title="View larger image" class="ui-icon ui-icon-magnifying">View larger</a>';
           $item .= '<a href="' . $put_last_url . '" title="Next Piece of Student Work" class="sort-next-button ui-icon ui-icon-next-arrow">Next Piece of Student Work</a>';

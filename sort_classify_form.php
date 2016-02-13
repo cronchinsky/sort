@@ -16,6 +16,7 @@ class sort_classify_form extends moodleform {
         $swids = "";
         foreach ($studentworks as $studentwork) {
           $mform->addElement('hidden','studentwork_classify_' . $studentwork->id, (isset($studentwork->category)) ? $studentwork->category : 0);
+          $mform->addElement('hidden','studentwork_comment_' . $studentwork->id, (isset($studentwork->commenttext)) ? $studentwork->commenttext : "Enter an explanation");
           $swids .= $studentwork->id . ",";
         }
         

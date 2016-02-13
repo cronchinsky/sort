@@ -69,7 +69,7 @@ class mod_sort_mod_form extends moodleform_mod {
         
         
         $mform->addElement('header','correct_answers_section','Correct/Incorrect Answers');
-                $mform->addElement('advcheckbox', 'has_correct', 'Correct Answers', 'This activity has correct / incorrect answers', NULL, array(0, 1));
+          $mform->addElement('advcheckbox', 'has_correct', 'Correct Answers', 'This activity has correct / incorrect answers', NULL, array(0, 1));
     	//----------------------------------------------------------------------------------
  		 $mform->addElement('header', 'optionssection', 'Display options');
         

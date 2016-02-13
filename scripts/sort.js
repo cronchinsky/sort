@@ -52,7 +52,7 @@ $(function() {
 
     // let the gallery items be draggable
     $( '.sort-draggable' ).draggable({
-        cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+        cancel: "a.ui-icon,input", // clicking an icon won't initiate dragging
         revert: "invalid", // when not dropped, the item will revert back to its initial position
         containment: ".sort-drag-interface",
         cursorAt: {
@@ -79,7 +79,11 @@ $(function() {
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
             categorize( ui.draggable, $(this) );
-                    sortUpdateCorrect();
+            ui.draggable.children("label").hide();
+            ui.draggable.children("input").hide();
+            ui.draggable.children("p").hide();
+						//ui.draggable.children(".content").show();
+            sortUpdateCorrect();
         }
     });
 
@@ -89,10 +93,14 @@ $(function() {
         activeClass: "custom-state-active",
         drop: function( event, ui ) {
             uncategorize( ui.draggable );
-                    sortUpdateCorrect();
+            ui.draggable.children("label").show();
+            ui.draggable.children("input").show();
+            ui.draggable.children("p").show();
+            sortUpdateCorrect();
+
         }
     });
-
+    
     // image categorize function
     function categorize( $item, $category ) {
         $item.fadeOut(function() {
@@ -108,9 +116,16 @@ $(function() {
                 sortUpdateCorrect();
             });
         });
+        console.log($item);
+        var itemId = $item.attr('id');
         var swid = $item.attr('id').split('_').pop();
         var value = $category.attr('id').split('_').pop();
+        var comment = $('#comment_' + swid).val();
+        console.log(itemId);   
+        console.log(comment);    
+        console.log(swid);
         $('[name=studentwork_classify_' + swid +']').val(value);
+        $('[name=studentwork_comment_' + swid +']').val(comment);
         $('[name=submitbutton]').addClass('needs-save');
     }
 
