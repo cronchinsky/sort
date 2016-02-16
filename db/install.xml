@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/sort/db" VERSION="20120918" COMMENT="XMLDB file for Moodle mod/sort"
+<XMLDB PATH="mod/sort/db" VERSION="20160212" COMMENT="XMLDB file for Moodle mod/sort"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="sort" COMMENT="Table for the sort activity." NEXT="sort_problem">
+    <TABLE NAME="sort" COMMENT="Table for the sort activity.">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="course"/>
-        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Course sort activity belongs to" PREVIOUS="id" NEXT="name"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="intro"/>
-        <FIELD NAME="intro" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="General introduction of the sort activity" PREVIOUS="name" NEXT="introformat"/>
-        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro" NEXT="timecreated"/>
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="introformat" NEXT="timemodified"/>
-        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated" NEXT="category_1"/>
-        <FIELD NAME="category_1" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="timemodified" NEXT="category_1_exampletext"/>
-        <FIELD NAME="category_1_exampletext" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="Text explaining the image uploaded as an example for category 1" PREVIOUS="category_1" NEXT="category_2"/>
-        <FIELD NAME="category_2" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="category_1_exampletext" NEXT="category_2_exampletext"/>
-        <FIELD NAME="category_2_exampletext" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="Text to explain the category 2 example" PREVIOUS="category_2" NEXT="category_3"/>
-        <FIELD NAME="category_3" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="category_2_exampletext" NEXT="category_3_exampletext"/>
-        <FIELD NAME="category_3_exampletext" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="Text to explain the example for category 3." PREVIOUS="category_3" NEXT="category_4"/>
-        <FIELD NAME="category_4" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="category_3_exampletext" NEXT="category_4_exampletext"/>
-        <FIELD NAME="category_4_exampletext" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="Text that explains the category 4 example." PREVIOUS="category_4" NEXT="display"/>
-        <FIELD NAME="display" TYPE="int" LENGTH="5" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="category_4_exampletext" NEXT="popupheight"/>
-        <FIELD NAME="popupheight" TYPE="int" LENGTH="5" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="display" NEXT="popupwidth"/>
-        <FIELD NAME="popupwidth" TYPE="int" LENGTH="5" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="popupheight" NEXT="grade"/>
-        <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" COMMENT="Grade scale for this sort" PREVIOUS="popupwidth" NEXT="has_correct"/>
-        <FIELD NAME="has_correct" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="true if this sort activity has correct answers." PREVIOUS="grade"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Course sort activity belongs to"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="name field for moodle instances"/>
+        <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="General introduction of the sort activity"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="category_1" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="category_1_exampletext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Text explaining the image uploaded as an example for category 1"/>
+        <FIELD NAME="category_2" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="category_2_exampletext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Text to explain the category 2 example"/>
+        <FIELD NAME="category_3" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="category_3_exampletext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Text to explain the example for category 3."/>
+        <FIELD NAME="category_4" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="category_4_exampletext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Text that explains the category 4 example."/>
+        <FIELD NAME="display" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="popupheight" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="popupwidth" TYPE="int" LENGTH="5" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="grade" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Grade scale for this sort"/>
+        <FIELD NAME="has_correct" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="true if this sort activity has correct answers."/>
+        <FIELD NAME="has_explain" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -34,55 +35,55 @@
         <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="sort_problem" COMMENT="Table for individual problems within the sort activity." PREVIOUS="sort" NEXT="sort_studentwork">
+    <TABLE NAME="sort_problem" COMMENT="Table for individual problems within the sort activity.">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sid"/>
-        <FIELD NAME="sid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Sort id" PREVIOUS="id" NEXT="name"/>
-        <FIELD NAME="name" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="Problem name" PREVIOUS="sid" NEXT="previous_data"/>
-        <FIELD NAME="previous_data" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="A serialized array of previous totals for the set of categories." PREVIOUS="name"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="sid" TYPE="int" LENGTH="11" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Sort id"/>
+        <FIELD NAME="name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Problem name"/>
+        <FIELD NAME="previous_data" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="A serialized array of previous totals for the set of categories."/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="sid"/>
-        <KEY NAME="sid" TYPE="foreign" FIELDS="sid" REFTABLE="sort" REFFIELDS="id" COMMENT="Sort ID" PREVIOUS="primary"/>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="sid" TYPE="foreign" FIELDS="sid" REFTABLE="sort" REFFIELDS="id" COMMENT="Sort ID"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="sort_studentwork" COMMENT="A specific piece of student work." PREVIOUS="sort_problem" NEXT="sort_classification">
+    <TABLE NAME="sort_studentwork" COMMENT="A specific piece of student work.">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="pid"/>
-        <FIELD NAME="pid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="The problem id." PREVIOUS="id" NEXT="name"/>
-        <FIELD NAME="name" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="The name of this piece of student work." PREVIOUS="pid" NEXT="correct_answer"/>
-        <FIELD NAME="correct_answer" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="The correct classification if specified, otherwise 0." PREVIOUS="name"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="pid" TYPE="int" LENGTH="11" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="The problem id."/>
+        <FIELD NAME="name" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The name of this piece of student work."/>
+        <FIELD NAME="correct_answer" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="The correct classification if specified, otherwise 0."/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="pid"/>
-        <KEY NAME="pid" TYPE="foreign" FIELDS="pid" REFTABLE="sort_problem" REFFIELDS="id" COMMENT="problem id." PREVIOUS="primary"/>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="pid" TYPE="foreign" FIELDS="pid" REFTABLE="sort_problem" REFFIELDS="id" COMMENT="problem id."/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="sort_classification" COMMENT="A users classification of a specific piece of student work." PREVIOUS="sort_studentwork" NEXT="sort_category">
+    <TABLE NAME="sort_classification" COMMENT="A users classification of a specific piece of student work.">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="category"/>
-        <FIELD NAME="category" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" COMMENT="The user's selected category." PREVIOUS="id" NEXT="commenttext"/>
-        <FIELD NAME="commenttext" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="The text of a comment from the user" PREVIOUS="category" NEXT="commenttime"/>
-        <FIELD NAME="commenttime" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Time the comment was submitted" PREVIOUS="commenttext" NEXT="swid"/>
-        <FIELD NAME="swid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Student work id" PREVIOUS="commenttime" NEXT="uid"/>
-        <FIELD NAME="uid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="User id" PREVIOUS="swid"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="category" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The user's selected category."/>
+        <FIELD NAME="commenttext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The text of a comment from the user"/>
+        <FIELD NAME="commenttime" TYPE="int" LENGTH="11" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Time the comment was submitted"/>
+        <FIELD NAME="swid" TYPE="int" LENGTH="11" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Student work id"/>
+        <FIELD NAME="uid" TYPE="int" LENGTH="11" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="User id"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="swid"/>
-        <KEY NAME="swid" TYPE="foreign" FIELDS="swid" REFTABLE="sort_studentwork" REFFIELDS="id" COMMENT="Student work id." PREVIOUS="primary" NEXT="uid"/>
-        <KEY NAME="uid" TYPE="foreign" FIELDS="uid" REFTABLE="user" REFFIELDS="id" COMMENT="User id." PREVIOUS="swid"/>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="swid" TYPE="foreign" FIELDS="swid" REFTABLE="sort_studentwork" REFFIELDS="id" COMMENT="Student work id."/>
+        <KEY NAME="uid" TYPE="foreign" FIELDS="uid" REFTABLE="user" REFFIELDS="id" COMMENT="User id."/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="sort_category" COMMENT="A category that a piece of student work can be sorted into." PREVIOUS="sort_classification">
+    <TABLE NAME="sort_category" COMMENT="A category that a piece of student work can be sorted into.">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sid"/>
-        <FIELD NAME="sid" TYPE="int" LENGTH="11" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="Sort ID" PREVIOUS="id" NEXT="category"/>
-        <FIELD NAME="category" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="Category Name" PREVIOUS="sid" NEXT="exampletext"/>
-        <FIELD NAME="exampletext" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="The text used for an example of this categorization" PREVIOUS="category"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="sid" TYPE="int" LENGTH="11" NOTNULL="false" SEQUENCE="false" COMMENT="Sort ID"/>
+        <FIELD NAME="category" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Category Name"/>
+        <FIELD NAME="exampletext" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="The text used for an example of this categorization"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="sid"/>
-        <KEY NAME="sid" TYPE="foreign" FIELDS="sid" REFTABLE="sort" REFFIELDS="id" COMMENT="The sort id" PREVIOUS="primary"/>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="sid" TYPE="foreign" FIELDS="sid" REFTABLE="sort" REFFIELDS="id" COMMENT="The sort id"/>
       </KEYS>
     </TABLE>
   </TABLES>

@@ -1,5 +1,4 @@
 $(function() {
-    
     // Turns off funky refresh behavior in firefox.  Hidden form holds
     // data from before refresh.
     if($.browser.mozilla) $("form").attr("autocomplete", "off");
@@ -78,12 +77,16 @@ $(function() {
         accept: "#sort-gallery > li, .sort-category li",
         activeClass: "ui-state-highlight",
         drop: function( event, ui ) {
-            categorize( ui.draggable, $(this) );
-            ui.draggable.children("label").hide();
-            ui.draggable.children("input").hide();
-            ui.draggable.children("p").hide();
-						//ui.draggable.children(".content").show();
-            sortUpdateCorrect();
+            if (ui.draggable.children('input').length > 0 && ui.draggable.children('input').val() == '') {
+	            alert('Please explain your sorting choice');
+            } else {
+            	categorize( ui.draggable, $(this) );           
+							ui.draggable.children("label").hide();
+							ui.draggable.children("input").hide();
+							ui.draggable.children("p").hide();
+							//ui.draggable.children(".content").show();
+							sortUpdateCorrect();
+            }
         }
     });
 
@@ -121,9 +124,6 @@ $(function() {
         var swid = $item.attr('id').split('_').pop();
         var value = $category.attr('id').split('_').pop();
         var comment = $('#comment_' + swid).val();
-        console.log(itemId);   
-        console.log(comment);    
-        console.log(swid);
         $('[name=studentwork_classify_' + swid +']').val(value);
         $('[name=studentwork_comment_' + swid +']').val(comment);
         $('[name=submitbutton]').addClass('needs-save');
@@ -225,21 +225,19 @@ $(function() {
        }
        return false;
     });
+    
 });
 
-window.onbeforeunload = function (e) {
-    if ($('#id_submitbutton').hasClass('needs-save')) {
-        var message = "You haven't saved your work yet.  Click OK to navigate away from this page and lose any unsaved data.";
-        var e = e || window.event;
-        // For IE and Firefox
-        if (e) {
-            e.returnValue = message;
-        }
 
-        // For Safari
-        return message;   
-    }
-}
+window.addEventListener("beforeunload", function (e) {
+ 
+ if ($('#id_submitbutton').hasClass('needs-save')) {
+ 		var message = "You haven't saved your work yet.";
+ 		(e || window.event).returnValue = message;
+ 		return message;
+ }
+});
+
 
 function sortShowCorrect() {
     

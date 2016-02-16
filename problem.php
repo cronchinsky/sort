@@ -95,6 +95,9 @@
   // Check to see if there are any correct answers
   $has_correct = $sort->has_correct;
   
+  // Check if the sort requires explanations
+  $has_explain = $sort->has_explain;
+  
   // If there is student work associated with this problem, load any classifications
   // from this user for any of these swids.  Yay implode!
   if ($swids) {
@@ -105,7 +108,9 @@
   $classifications_indexed = array();
   foreach ($classifications as $classification) {
     $studentworks[$classification->swid]->category = $classification->category;
-    $studentworks[$classification->swid]->commenttext = $classification->commenttext;
+    if ($has_explain) {
+    	$studentworks[$classification->swid]->commenttext = $classification->commenttext;
+    }
     $classifications_indexed[$classification->swid] = $classification;
   }
   }
@@ -124,6 +129,7 @@
     $PAGE->requires->js('/mod/sort/scripts/jquery.min.js');
     $PAGE->requires->js('/mod/sort/scripts/jquery-ui.min.js');
     $PAGE->requires->js('/mod/sort/scripts/sort.js');
+
     $PAGE->add_body_class('sort-problem-view');
 
     sort_set_display_type($sort);
@@ -149,7 +155,9 @@
         unset($classification);
         $classification->category = $form_results['studentwork_classify_' . $swid];
         $classification->swid = $swid;
-        $classification->commenttext = $form_results['studentwork_comment_' . $swid];
+        if ($has_explain) {
+        	$classification->commenttext = $form_results['studentwork_comment_' . $swid];
+        }
         $classification->uid = $USER->id;
 
         // If this is set, there was previous data.
@@ -223,8 +231,10 @@
 
           $item = "<li id='studentwork_$studentwork->id' class='ui-widget-content ui-corner-tr sort-draggable sort-studentwork' data-correct='$studentwork->correct_answer'>";
           $item .= '<h5 class="ui-widget-header">' . $studentwork->name . "</h5>";
-          $item .= "<label>My Explanation: </label><input type='text' id='comment_$studentwork->id' value='$studentwork->commenttext' />";
-          $item .= "<p>Please explain your sorting choice</p>";
+          if ($has_explain) {
+          	$item .= "<label>My Explanation: </label><input type='text' id='comment_$studentwork->id' value='$studentwork->commenttext' />";
+						$item .= "<p class='explain'>Please write an explanation for your sorting choice</p>";
+					}
           $item .= '<img src="' . $image_url . '" alt="' . addslashes($studentwork->name) . '" />';
           $item .= '<a href="' . $image_url . '" title="View larger image" class="ui-icon ui-icon-magnifying">View larger</a>';
           $item .= '<a href="' . $put_last_url . '" title="Next Piece of Student Work" class="sort-next-button ui-icon ui-icon-next-arrow">Next Piece of Student Work</a>';
@@ -285,8 +295,8 @@
 
  // Begin action links at the bottom.
   echo "<div class='sort-action-links'>";
-  if (empty($has_correct)) echo '<span class="sort-participant-results-box"><a id="participant" href="studentwork.php?pid=' . $problem->id . '">Participant responses</a></span>';
-  if (empty($has_correct)) echo "<span class='sort-see-all-scores-link-box'><a id='allscores' href='allscores.php?sid=$sort->id&amp;pid=$problem->id'>My class chart</a></span>";
+  if (empty($has_correct)) echo '<span class="sort-participant-results-box"><a id="participant" href="studentwork.php?pid=' . $problem->id . '">View all responses</a></span>';
+  if (empty($has_correct)) echo "<span class='sort-see-all-scores-link-box'><a id='allscores' href='allscores.php?sid=$sort->id&amp;pid=$problem->id'>View my responses</a></span>";
   echo '<span class="sort-back-link-box"><a id="sortmenu" href="view.php?s=' . $sort->id . '">Sort menu</a></span>';
   if (has_capability('mod/sort:edit', $context)) {
   echo '<span class="sort-edit-stuwork-link-box"><a href="editstuwork.php?pid=' . $problem->id . '">Manage student work</a></span>';
@@ -304,7 +314,7 @@
 	      echo "<legend><span class='ui-icon ui-icon-triangle-1-e'></span><span class='sort-directions-text'>Directions and Examples</span></legend>";
 	      echo "<div class='sort-directions-content'><p>Sort the student work into the different categories below.  You can click on the image of student work and drag it to one of the different categories. If you are unsure where to place the student's work and are not leaning towards one of the categories,it is ok to skip the piece and leaving it as unsorted. </p><p class='ui-icon-magnifying'>Click the magnifying glass to enlarge the image.</p><p class='ui-icon-next-arrow'>Click the arrow to move to the next image to sort.</p><h4 id='save'>After you have finished sorting, be sure to click 'Save changes' to permanently save your work.</h4>";
 	      echo "<p>After saving your work, you can click on:</p>";
-	      echo "<ul><li><em>Participant responses</em> to see how others sorted the work.</li><li><em>My class chart</em> to see a summary chart based on how you have sorted the student work into the categories.</li></ul>";
+	      echo "<ul><li><em>Participant exlanations</em> to see how others sorted the work.</li><li><em>My class chart</em> to see a summary chart based on how you have sorted the student work into the categories.</li></ul>";
 	      echo "<div class='sort-examples-accordion'>";
 	    echo "<h3>Examples</h3>";
 	    echo '<div id="accordion">';

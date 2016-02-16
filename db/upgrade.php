@@ -75,7 +75,7 @@ function xmldb_sort_upgrade($oldversion) {
     }
     
     
-        if ($oldversion < 2012091800) {
+    if ($oldversion < 2012091800) {
 
         // Define field has_correct to be added to sort
         $table = new xmldb_table('sort');
@@ -88,6 +88,20 @@ function xmldb_sort_upgrade($oldversion) {
 
         // sort savepoint reached
         upgrade_mod_savepoint(true, 2012091800, 'sort');
+    }
+    if ($oldversion < 2016021200) {
+
+        // Define field has_explain to be added to sort.
+        $table = new xmldb_table('sort');
+        $field = new xmldb_field('has_explain', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'has_correct');
+
+        // Conditionally launch add field has_explain.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Sort savepoint reached.
+        upgrade_mod_savepoint(true, 2016021200, 'sort');
     }
 
 

@@ -140,6 +140,16 @@
   cursor: move;
 }
 
+.sort-gallery input {
+	width: 600px;
+}
+
+.sort-gallery p.explain {
+	font-size: 12px;
+	font-style: italic;
+	margin-left: -230px;
+}
+
 .moodle-26-etlo-org .sort-gallery li img {
   width: 100%;
 }
@@ -180,7 +190,10 @@
   float: left;
 }
 
-.sort-category li > img {
+.sort-category li > img,
+.sort-category li > label,
+.sort-category li > input,
+.sort-category li > p {
   display: none;
 }
 
@@ -253,6 +266,10 @@ li.sort-pager-link-1:before {
     border: 1px solid #d3d3d3;
     border-radius: 15px;
     text-align: left;
+}
+
+.sort-student-work-wrapper h2 {
+	text-align: center;
 }
 
 .sort-no-work-wrapper {

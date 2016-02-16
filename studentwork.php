@@ -314,15 +314,15 @@ echo "</table>";
 echo "</div></div>";
 
 echo "</div>";
-echo '<div class="sort-studentwork-comment-form">';
-echo "<h3 class='sort-studentwork-comment-form-header'><span class='ui-icon ui-icon-triangle-1-e sort-explanation-triangle'></span><span class='sort-explanation-header'>My Explanation - Give reasons for your classification</span></h3>";
-echo "<div class='sort-studentwork-comment-form-body'>";
-if (isset($this_classification->commenttime)) unset($this_classification->commenttime);
+//echo '<div class="sort-studentwork-comment-form">';
+//echo "<h3 class='sort-studentwork-comment-form-header'><span class='ui-icon ui-icon-triangle-1-e sort-explanation-triangle'></span><span class='sort-explanation-header'>My Explanation - Give reasons for your classification</span></h3>";
+//echo "<div class='sort-studentwork-comment-form-body'>";
+//if (isset($this_classification->commenttime)) unset($this_classification->commenttime);
 
-echo $mform->display();
+//echo $mform->display();
 
-echo "</div>";
-echo "</div>";
+//echo "</div>";
+//echo "</div>";
 echo '<div class="sort-studentwork-comments">';
 
 echo "<h3>Explanations</h3>";
