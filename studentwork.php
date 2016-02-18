@@ -79,7 +79,7 @@ if ($course->id) {
 else {
     error('Could not find the problem sort activity or course!');
 }
-
+$has_explain = $sort->has_explain;
 // require_login has to come before additional settings to the $PAGE variable, or somethings (like
 // pagelayout are lost -- CR
 require_login($course, true, $cm);
@@ -314,43 +314,49 @@ echo "</table>";
 echo "</div></div>";
 
 echo "</div>";
-//echo '<div class="sort-studentwork-comment-form">';
-//echo "<h3 class='sort-studentwork-comment-form-header'><span class='ui-icon ui-icon-triangle-1-e sort-explanation-triangle'></span><span class='sort-explanation-header'>My Explanation - Give reasons for your classification</span></h3>";
-//echo "<div class='sort-studentwork-comment-form-body'>";
-//if (isset($this_classification->commenttime)) unset($this_classification->commenttime);
 
-//echo $mform->display();
+if ($has_explain) {
+/*
+	echo '<div class="sort-studentwork-comment-form">';
+	echo "<h3 class='sort-studentwork-comment-form-header'><span class='ui-icon ui-icon-triangle-1-e sort-explanation-triangle'></span><span class='sort-explanation-header'>My Explanation - Give reasons for your classification</span></h3>";
+	echo "<div class='sort-studentwork-comment-form-body'>";
+	if (isset($this_classification->commenttime)) unset($this_classification->commenttime);
+	
+	echo $mform->display();
+	
+	echo "</div>";
+	echo "</div>";
+*/
 
-//echo "</div>";
-//echo "</div>";
-echo '<div class="sort-studentwork-comments">';
-
-echo "<h3>Explanations</h3>";
-echo "<p>View other participant's explanations.</p>";
-echo "<div id='sort-filter-container' >Filter: <select id='sort-comment-filter'>";
-echo "<option value='0'>- All -</option>";
-foreach ($categories as $cat_id => $category)  {
-  echo "<option value='$cat_id'>$category->category</option>";
+	echo '<div class="sort-studentwork-comments">';
+	
+	echo "<h3>Explanations</h3>";
+	echo "<p>View other participant's explanations.</p>";
+	echo "<div id='sort-filter-container' >Filter: <select id='sort-comment-filter'>";
+	echo "<option value='0'>- All -</option>";
+	foreach ($categories as $cat_id => $category)  {
+	  echo "<option value='$cat_id'>$category->category</option>";
+	}
+	echo "</select></div>
+	";
+	$first = true;
+	foreach ($all_classifications as $classification) {
+	  if (!is_null($classification->commenttext)) {
+	    $class = "sort-comment-box sort-comment-category-$classification->category";
+	    if ($first) {
+	      $first = false;
+	      $class .= ' sort-comment-first';
+	    }
+	    echo "<div class='$class'>";
+	    //echo "<div class='sort-comment-username'><strong>" . $users[$classification->uid]->username . "</strong> - <em>" . $categories[$classification->category]->category . "</em></div> ";
+	    echo "<div class='sort-comment-username'><em>" . $categories[$classification->category]->category . "</em></div> ";
+	    echo "<div class='sort-comment-body'>" . format_text($classification->commenttext) . "</div>";
+	    echo "</div>";
+	  }
+	}
+	
+	echo '</div>';
 }
-echo "</select></div>
-";
-$first = true;
-foreach ($all_classifications as $classification) {
-  if (!is_null($classification->commenttext)) {
-    $class = "sort-comment-box sort-comment-category-$classification->category";
-    if ($first) {
-      $first = false;
-      $class .= ' sort-comment-first';
-    }
-    echo "<div class='$class'>";
-    //echo "<div class='sort-comment-username'><strong>" . $users[$classification->uid]->username . "</strong> - <em>" . $categories[$classification->category]->category . "</em></div> ";
-    echo "<div class='sort-comment-username'><em>" . $categories[$classification->category]->category . "</em></div> ";
-    echo "<div class='sort-comment-body'>" . format_text($classification->commenttext) . "</div>";
-    echo "</div>";
-  }
-}
-
-echo '</div>';
 echo "<div class='sort-action-links'>";
 echo '<span class="sort-back-problem-link-box"><a href="problem.php?id=' . $problem->id . '">Back to Sort</a></span>';
 echo "</div>";
