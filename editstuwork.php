@@ -48,6 +48,8 @@ else {
   error('Could not find the course / sort activity!');
 }
 
+//$custom_labels = $sort->custom_labels;
+
 // Moodley goodness.
 require_login($course, true, $cm);
 $context = get_context_instance(CONTEXT_MODULE, $cm->id);

@@ -73,6 +73,10 @@ class mod_sort_mod_form extends moodleform_mod {
         
         $mform->addElement('header','explain_section','Provide Explanations');
         $mform->addElement('advcheckbox', 'has_explain', 'Explanations', 'This activity has explanations', NULL, array(0, 1));
+        
+        $mform->addElement('header','custom_section','Custom Labels');
+        $mform->addElement('advcheckbox', 'custom_labels', 'Custom Labels', 'This activity has custom labels', NULL, array(0, 1));
+
 
     	//----------------------------------------------------------------------------------
  		 $mform->addElement('header', 'optionssection', 'Display options');

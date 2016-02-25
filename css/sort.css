@@ -125,6 +125,8 @@
 .sort-gallery li h5 {
   margin: 0 0 0.4em;
   cursor: move;
+  height: 18px;
+  overflow: hidden;
 }
 
 .sort-gallery .sort-studentwork > a {

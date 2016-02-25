@@ -103,6 +103,21 @@ function xmldb_sort_upgrade($oldversion) {
         // Sort savepoint reached.
         upgrade_mod_savepoint(true, 2016021200, 'sort');
     }
+    if ($oldversion < 2016022500) {
+
+        // Define field custom_labels to be added to sort.
+        $table = new xmldb_table('sort');
+        $field = new xmldb_field('custom_labels', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'has_explain');
+
+        // Conditionally launch add field custom_labels.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Sort savepoint reached.
+        upgrade_mod_savepoint(true, 2016022500, 'sort');
+    }
+
 
 
     return true;

@@ -14,16 +14,21 @@ class sort_new_studentwork_form extends moodleform {
         $this_studentwork = $this->_customdata['this_studentwork'];
         $sort = $this->_customdata['sort'];
         $problem = $this->_customdata['problem'];
-        $letters = range('A','Z');
-        $options = array_combine($letters,$letters);
         
-        foreach ($studentworks as $studentwork) {
-          if (isset($options[$studentwork->name]) && (isset($this_studentwork) && $this_studentwork->name != $studentwork->name) || !isset($this_studentwork)) {
-              unset($options[$studentwork->name]);
-          }
+        if ($sort->custom_labels) {
+	        $mform->addElement('text', 'studentworkname', 'Name');
+        } else {
+	        $letters = range('A','Z');
+	        $options = array_combine($letters,$letters);
+	        
+	        foreach ($studentworks as $studentwork) {
+	          if (isset($options[$studentwork->name]) && (isset($this_studentwork) && $this_studentwork->name != $studentwork->name) || !isset($this_studentwork)) {
+	              unset($options[$studentwork->name]);
+	          }
+	        }
+	
+	        $mform->addElement('select', 'studentworkname', 'Name', $options);
         }
-
-        $mform->addElement('select', 'studentworkname', 'Name', $options);
         $mform->addRule('studentworkname', 'This field is required', 'required');
         
         $mform->addElement('filemanager', 'attachments', 'sample image', null,
