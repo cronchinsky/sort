@@ -314,7 +314,7 @@
 	      echo "<legend><span class='ui-icon ui-icon-triangle-1-e'></span><span class='sort-directions-text'>Directions and Examples</span></legend>";
 	      echo "<div class='sort-directions-content'><p>Sort the student work into the different categories below.  You can click on the image of student work and drag it to one of the different categories. If you are unsure where to place the student's work and are not leaning towards one of the categories,it is ok to skip the piece and leaving it as unsorted. </p><p class='ui-icon-magnifying'>Click the magnifying glass to enlarge the image.</p><p class='ui-icon-next-arrow'>Click the arrow to move to the next image to sort.</p><h4 id='save'>After you have finished sorting, be sure to click 'Save changes' to permanently save your work.</h4>";
 	      echo "<p>After saving your work, you can click on:</p>";
-	      echo "<ul><li><em>Participant exlanations</em> to see how others sorted the work.</li><li><em>My class chart</em> to see a summary chart based on how you have sorted the student work into the categories.</li></ul>";
+	      echo "<ul><li><em>View all responses</em> to see how others sorted the work.</li><li><em>View my responses</em> to see a summary chart based on how you have sorted the student work into the categories.</li></ul>";
 	      echo "<div class='sort-examples-accordion'>";
 	    echo "<h3>Examples</h3>";
 	    echo '<div id="accordion">';

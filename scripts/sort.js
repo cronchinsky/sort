@@ -150,9 +150,14 @@ $(function() {
 
     // image preview function, demonstrating the ui.dialog used as a modal window
     function viewLargerImage( $link ) {
+        //console.log($link.siblings( "input" ).val());
         var src = $link.attr( "href" ),
         title = $link.siblings( "img" ).attr( "alt" ),
+        explanation = $link.siblings("input").val(),
         $modal = $( "img[src$='" + src + "']" ).find('.sort-modal-image');
+        if (explanation.length > 0) {
+	        title = title + "<br />My Explanation: " + explanation;
+        }
 
         if ( $modal.length ) {
             $modal.dialog( "open" );
