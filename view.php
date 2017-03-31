@@ -47,7 +47,7 @@ if ($id) {
 }
 
 require_login($course, true, $cm);
-$context = get_context_instance(CONTEXT_MODULE, $cm->id);
+$context = context_module::instance($cm->id);
 
 $categories = sort_get_categories($sort->id,$context);
 if (!$categories) redirect("managecategories.php?sid=$sort->id");

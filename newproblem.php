@@ -51,7 +51,7 @@ else {
 
 // Moodley goodness.
 require_login($course, true, $cm);
-$context = get_context_instance(CONTEXT_MODULE, $cm->id);
+$context = context_module::instance($cm->id);
 add_to_log($course->id, 'sort', 'view', "newproblem.php?sid=$sid", $sort->name, $cm->id);
 
 // Make sure we have an editor.

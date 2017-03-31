@@ -9,7 +9,7 @@ $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EX
 $sort  = $DB->get_record('sort', array('id' => $cm->instance), '*', MUST_EXIST);
 
 require_login($course, true, $cm);
-$context = get_context_instance(CONTEXT_MODULE, $cm->id);
+$context = context_module::instance($cm->id);
 
 //Get users enrolled in the course.
 $enrols = $DB->get_records('enrol',array('courseid' => $course->id));

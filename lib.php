@@ -107,7 +107,7 @@ function sort_update_instance(stdClass $sort, mod_sort_mod_form $mform = null) {
     $results = $mform->get_data();
     $cmid = $sort->coursemodule;
         
-    $context = get_context_instance(CONTEXT_MODULE, $cmid);
+    $context = context_module::instance($cmid);
     sort_grade_item_update($sort);
 
     return true;

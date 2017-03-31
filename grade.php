@@ -17,7 +17,7 @@ if (! $course = $DB->get_record("course", array("id"=>$sort->course))) {
 
 require_login($course, false, $cm);
 
-if (has_capability('mod/sort:edit', get_context_instance(CONTEXT_MODULE, $cm->id))) {
+if (has_capability('mod/sort:edit', context_module::instance($cm->id))) {
     redirect('getgrades.php?id='.$cm->id);
 } else {
     redirect('view.php?id='.$cm->id);

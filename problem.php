@@ -56,7 +56,7 @@
 
   // This is some moodle stuff that seems to be necessary :)
   require_login($course, true, $cm);
-  $context = get_context_instance(CONTEXT_MODULE, $cm->id);
+  $context = context_module::instance($cm->id);
 
   // Log this page view.
   add_to_log($course->id, 'sort', 'view', "problem.php?id={$cm->id}", $problem->name, $cm->id);

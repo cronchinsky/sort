@@ -15,7 +15,7 @@ $course     = $DB->get_record('course', array('id' => $sort->course), '*', MUST_
 $cm         = get_coursemodule_from_instance('sort', $sort->id, $course->id, false, MUST_EXIST);
 
 require_login($course, true, $cm);
-$context = get_context_instance(CONTEXT_MODULE, $cm->id);
+$context = context_module::instance($cm->id);
 
 add_to_log($course->id, 'sort', 'managecategories', "managecategories.php?id={$cm->id}", $sort->name, $cm->id);
 
