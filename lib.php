@@ -458,17 +458,23 @@ function sort_get_coursemodule_info($coursemodule) {
     return NULL;
  }
     
+/*
     $info = new stdClass();
     $info->name = $sort->name;
+*/
+    $info = new cached_cm_info();
+    $info->name = $sort->name;
+
 	
     if ($sort->display != RESOURCELIB_DISPLAY_POPUP) {
         return $info;
     }
-    $fullurl = "$CFG->wwwroot/mod/sort/view.php?id=$coursemodule->id&amp;inpopup=1";
+    $fullurl = "$CFG->wwwroot/mod/sort/view.php?id=$coursemodule->id&amp;redirect=1";
     $width  = empty($sort->popupwidth)  ? 620 : $sort->popupwidth;
     $height = empty($sort->popupheight) ? 450 : $sort->popupheight;
     $wh = "width=$width,height=$height,toolbar=no,location=no,menubar=no,copyhistory=no,status=no,directories=no,scrollbars=yes,resizable=yes";
-    $info->extra = "onclick=\"window.open('$fullurl', '', '$wh'); return false;\"";
+    $info->onclick = "window.open('$fullurl', '', '$wh'); return false;";
+    
     return $info;
 }
 
