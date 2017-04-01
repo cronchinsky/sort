@@ -1,4 +1,5 @@
 <?php
+/*
 $handlers = array (
     'mod_created' => array (
          'handlerfile'      => '/mod/sort/lib.php',
@@ -6,3 +7,4 @@ $handlers = array (
          'schedule'         => 'instant'
      )
 );
+*/
